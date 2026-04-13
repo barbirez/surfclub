@@ -1,0 +1,196 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Auth.js required models ────────────────────────────────────────────────
+
+model User {
+  id                     String    @id @default(cuid())
+  name                   String?
+  email                  String    @unique
+  emailVerified          DateTime?
+  image                  String?
+  stripeCustomerId       String?   @unique
+  stripePriceId          String?
+  stripeSubscriptionId   String?
+  stripeCurrentPeriodEnd DateTime?
+  trialEndsAt            DateTime?
+  plan                   Plan      @default(FREE)
+
+  accounts           Account[]
+  sessions           Session[]
+  reservations       Reservation[]
+  liabilityAcceptances LiabilityAcceptance[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+// ─── Plan enum ───────────────────────────────────────────────────────────────
+
+enum Plan {
+  FREE
+  TRIAL
+  PRO
+}
+
+// ─── EasySurf product models ─────────────────────────────────────────────────
+
+model Location {
+  id                   String  @id @default(cuid())
+  city                 String
+  town                 String
+  address              String
+  latitude             Float
+  longitude            Float
+  pickupInstructions   String  @db.Text
+  returnInstructions   String  @db.Text
+
+  surfboards   Surfboard[]
+  reservations Reservation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum SurfboardType {
+  SHORTBOARD
+  LONGBOARD
+  FISH
+  FUNBOARD
+  GUN
+  SUP
+  FOIL
+}
+
+enum SurfboardStatus {
+  AVAILABLE
+  UNAVAILABLE
+  MAINTENANCE
+}
+
+model Surfboard {
+  id             String          @id @default(cuid())
+  name           String
+  locationId     String
+  type           SurfboardType
+  shaper         String?
+  size           String
+  volumeLiters   Float
+  description    String?         @db.Text
+  conditionProfile String?       @db.Text
+  images         String[]
+  status         SurfboardStatus @default(AVAILABLE)
+
+  location     Location      @relation(fields: [locationId], references: [id])
+  reservations Reservation[]
+  availability Availability[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  ACTIVE
+  RETURNED
+  CANCELLED
+}
+
+model RentalPlan {
+  id                  String  @id @default(cuid())
+  name                String
+  priceMonthly        Int
+  maxDaysPerReservation Int
+  commitmentMonths    Int
+  isActive            Boolean @default(true)
+
+  reservations Reservation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Reservation {
+  id               String            @id @default(cuid())
+  userId           String
+  surfboardId      String
+  rentalPlanId     String?
+  startDate        DateTime
+  endDate          DateTime
+  status           ReservationStatus @default(PENDING)
+  pickupLocationId String
+
+  user             User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  surfboard        Surfboard            @relation(fields: [surfboardId], references: [id])
+  rentalPlan       RentalPlan?          @relation(fields: [rentalPlanId], references: [id])
+  pickupLocation   Location             @relation(fields: [pickupLocationId], references: [id])
+  liabilityAcceptance LiabilityAcceptance?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Availability {
+  surfboardId String
+  date        DateTime @db.Date
+  isAvailable Boolean  @default(true)
+  updatedAt   DateTime @updatedAt
+
+  surfboard Surfboard @relation(fields: [surfboardId], references: [id], onDelete: Cascade)
+
+  @@id([surfboardId, date])
+}
+
+model LiabilityAcceptance {
+  id               String   @id @default(cuid())
+  reservationId    String   @unique
+  userId           String
+  acceptedAt       DateTime @default(now())
+  checkboxVersion  String
+  userAgent        String?
+  ipAddress        String?
+
+  reservation Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
