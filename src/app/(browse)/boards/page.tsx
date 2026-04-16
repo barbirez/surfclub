@@ -1,9 +1,12 @@
 import { Suspense } from "react";
 import { db } from "@/lib/db";
+import { Prisma } from "@prisma/client";
 import { BoardCard } from "@/components/boards/BoardCard";
 import { BoardFilters } from "@/components/boards/BoardFilters";
 import { getFilterOptions } from "./actions";
 import type { SurfboardType } from "@prisma/client";
+
+const VALID_TYPES = new Set(["SHORTBOARD", "LONGBOARD", "FISH", "FUNBOARD", "GUN", "SUP", "FOIL"]);
 
 interface PageProps {
   searchParams: Promise<{
@@ -22,15 +25,23 @@ export default async function BoardsPage({ searchParams }: PageProps) {
   const params = await searchParams;
   const { type, minVolume, maxVolume, minSize, maxSize, shaper, city, q } = params;
 
+  // Build search conditions safely
+  const searchConditions: Prisma.SurfboardWhereInput[] = [];
+  if (q) {
+    searchConditions.push({ name: { contains: q, mode: "insensitive" as Prisma.QueryMode } });
+    searchConditions.push({ location: { city: { contains: q, mode: "insensitive" as Prisma.QueryMode } } });
+    if (VALID_TYPES.has(q.toUpperCase())) {
+      searchConditions.push({ type: { equals: q.toUpperCase() as SurfboardType } });
+    }
+  }
+
   const [boards, filterOptions] = await Promise.all([
     db.surfboard.findMany({
       where: {
         status: "AVAILABLE",
-        ...(type && type !== "all" && { type: type as SurfboardType }),
+        ...(type && type !== "all" && VALID_TYPES.has(type) && { type: type as SurfboardType }),
         ...(shaper && shaper !== "all" && { shaper }),
-        ...(city && city !== "all"
-          ? { location: { city } }
-          : {}),
+        ...(city && city !== "all" ? { location: { city } } : {}),
         ...(minVolume || maxVolume
           ? {
               volumeLiters: {
@@ -47,15 +58,7 @@ export default async function BoardsPage({ searchParams }: PageProps) {
               },
             }
           : {}),
-        ...(q
-          ? {
-              OR: [
-                { name: { contains: q, mode: "insensitive" } },
-                { type: { equals: q.toUpperCase() as SurfboardType } },
-                { location: { city: { contains: q, mode: "insensitive" } } },
-              ],
-            }
-          : {}),
+        ...(searchConditions.length > 0 ? { OR: searchConditions } : {}),
       },
       include: {
         location: { select: { city: true, town: true } },

@@ -10,7 +10,10 @@
       "Bash(git -C /Users/barbararezende/surfclub status)",
       "Bash(git -C /Users/barbararezende/surfclub unstage .claude/worktrees/jovial-shtern .claude/worktrees/vibrant-driscoll)",
       "Bash(git -C /Users/barbararezende/surfclub restore --staged .claude/worktrees/jovial-shtern .claude/worktrees/vibrant-driscoll)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(ln -s /Users/barbararezende/surfclub/.env .env)",
+      "Bash(npx prisma:*)"
     ]
   }
 }
