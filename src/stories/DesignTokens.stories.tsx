@@ -155,7 +155,7 @@ const SPACING_SAMPLES = [
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-function DesignTokensPage() {
+export function DesignTokensPage() {
   return (
     <div style={{
       padding: "2.5rem",
