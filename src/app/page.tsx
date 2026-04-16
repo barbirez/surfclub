@@ -15,6 +15,7 @@ import { LandingNav } from "@/components/layout/LandingNav";
 import { LandingFooter } from "@/components/layout/LandingFooter";
 import { HeroSection } from "@/components/layout/HeroSection";
 import { BoardCarousel } from "@/components/boards/BoardCarousel";
+import { ValuePropsSection } from "@/components/layout/ValuePropsSection";
 import { db } from "@/lib/db";
 
 export default async function LandingPage() {
@@ -32,6 +33,9 @@ export default async function LandingPage() {
 
       {/* Board carousel */}
       <BoardCarousel boards={boards} />
+
+      {/* Value props — scroll reveal */}
+      <ValuePropsSection />
 
       {/* Features */}
       <section id="features" className="mx-auto max-w-7xl px-4 py-20 sm:px-6">

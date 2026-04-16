@@ -17,8 +17,6 @@ interface BoardSpecsProps {
     size: string;
     volumeLiters: number;
     conditionProfile?: string | null;
-    dimensions?: string | null;
-    finSetup?: string | null;
   };
 }
 
@@ -49,8 +47,6 @@ export function BoardSpecsSection({ board }: BoardSpecsProps) {
         <SpecRow label="Shaper" value={board.shaper} />
         <SpecRow label="Volume" value={`${board.volumeLiters}L`} />
         <SpecRow label="Tamanho" value={board.size} />
-        <SpecRow label="Dimensão" value={board.dimensions} />
-        <SpecRow label="1ª Opção de Quilha" value={board.finSetup} />
       </div>
     </section>
   );

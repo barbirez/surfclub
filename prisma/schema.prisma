@@ -115,10 +115,7 @@ model Surfboard {
   type             SurfboardType
   shaper           String?
   size             String
-  sizeInches       Float?
   volumeLiters     Float
-  dimensions       String?
-  finSetup         String?
   description      String?         @db.Text
   conditionProfile String?         @db.Text
   images           String[]
