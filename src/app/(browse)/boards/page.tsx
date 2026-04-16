@@ -17,13 +17,14 @@ interface PageProps {
     maxSize?: string;
     shaper?: string;
     city?: string;
+    spot?: string;
     q?: string;
   }>;
 }
 
 export default async function BoardsPage({ searchParams }: PageProps) {
   const params = await searchParams;
-  const { type, minVolume, maxVolume, minSize, maxSize, shaper, city, q } = params;
+  const { type, minVolume, maxVolume, minSize, maxSize, shaper, city, spot, q } = params;
 
   // Build search conditions safely
   const searchConditions: Prisma.SurfboardWhereInput[] = [];
@@ -40,7 +41,11 @@ export default async function BoardsPage({ searchParams }: PageProps) {
     status: "AVAILABLE",
     ...(type && type !== "all" && VALID_TYPES.has(type) && { type: type as SurfboardType }),
     ...(shaper && shaper !== "all" && { shaper }),
-    ...(city && city !== "all" ? { location: { city } } : {}),
+    ...(spot && spot !== "all"
+      ? { locationId: spot }
+      : city && city !== "all"
+        ? { location: { city } }
+        : {}),
     ...(minVolume || maxVolume
       ? {
           volumeLiters: {
@@ -95,7 +100,7 @@ export default async function BoardsPage({ searchParams }: PageProps) {
       <div className="flex gap-8 items-start">
         {/* Sidebar filters */}
         <Suspense fallback={null}>
-          <BoardFilters shapers={filterOptions.shapers} cities={filterOptions.cities} />
+          <BoardFilters shapers={filterOptions.shapers} cities={filterOptions.cities} spots={filterOptions.spots} />
         </Suspense>
 
         {/* Board grid */}

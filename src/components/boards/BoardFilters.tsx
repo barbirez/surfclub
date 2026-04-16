@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useRef, useState, useEffect } from "react";
+import { useCallback, useRef, useState, useEffect, useMemo } from "react";
 import {
   Select,
   SelectContent,
@@ -24,9 +24,16 @@ const BOARD_TYPES = [
   { value: "FOIL", label: "Foil" },
 ];
 
+interface Spot {
+  id: string;
+  label: string;
+  city: string;
+}
+
 interface BoardFiltersProps {
   shapers: string[];
   cities: string[];
+  spots: Spot[];
 }
 
 function useDebouncedParam(
@@ -38,7 +45,6 @@ function useDebouncedParam(
   const [local, setLocal] = useState(searchParams.get(key) || "");
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  // Sync from URL → local when URL changes externally (e.g. "Limpar")
   useEffect(() => {
     setLocal(searchParams.get(key) || "");
   }, [searchParams, key]);
@@ -63,7 +69,7 @@ function useDebouncedParam(
   return [local, onChange] as const;
 }
 
-export function BoardFilters({ shapers, cities }: BoardFiltersProps) {
+export function BoardFilters({ shapers, cities, spots }: BoardFiltersProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -82,6 +88,10 @@ export function BoardFilters({ shapers, cities }: BoardFiltersProps) {
       } else {
         params.delete(key);
       }
+      // Clear spot when city changes
+      if (key === "city") {
+        params.delete("spot");
+      }
       pushUrl(params);
     },
     [searchParams, pushUrl]
@@ -93,7 +103,17 @@ export function BoardFilters({ shapers, cities }: BoardFiltersProps) {
   const [minVolume, setMinVolume] = useDebouncedParam("minVolume", searchParams, pushUrl);
   const [maxVolume, setMaxVolume] = useDebouncedParam("maxVolume", searchParams, pushUrl);
 
-  const FILTER_KEYS = ["type", "minVolume", "maxVolume", "minSize", "maxSize", "shaper", "city", "q"];
+  const selectedCity = searchParams.get("city");
+
+  // Filter spots by selected city
+  const filteredSpots = useMemo(() => {
+    if (selectedCity && selectedCity !== "all") {
+      return spots.filter((s) => s.city === selectedCity);
+    }
+    return spots;
+  }, [spots, selectedCity]);
+
+  const FILTER_KEYS = ["type", "minVolume", "maxVolume", "minSize", "maxSize", "shaper", "city", "spot", "q"];
   const hasFilters = FILTER_KEYS.some((k) => searchParams.get(k));
 
   return (
@@ -129,6 +149,52 @@ export function BoardFilters({ shapers, cities }: BoardFiltersProps) {
           />
         </div>
       </div>
+
+      {/* City */}
+      {cities.length > 0 && (
+        <div className="space-y-1.5">
+          <Label className="text-xs text-muted-foreground uppercase tracking-wide">Cidade</Label>
+          <Select
+            value={searchParams.get("city") || "all"}
+            onValueChange={(v) => updateSelect("city", v)}
+          >
+            <SelectTrigger className="h-9 w-full">
+              <SelectValue placeholder="Todas as cidades" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todas as cidades</SelectItem>
+              {cities.map((c) => (
+                <SelectItem key={c} value={c}>
+                  {c}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+
+      {/* Spot / Ponto */}
+      {filteredSpots.length > 0 && (
+        <div className="space-y-1.5">
+          <Label className="text-xs text-muted-foreground uppercase tracking-wide">Ponto</Label>
+          <Select
+            value={searchParams.get("spot") || "all"}
+            onValueChange={(v) => updateSelect("spot", v)}
+          >
+            <SelectTrigger className="h-9 w-full">
+              <SelectValue placeholder="Todos os pontos" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todos os pontos</SelectItem>
+              {filteredSpots.map((s) => (
+                <SelectItem key={s.id} value={s.id}>
+                  {s.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
 
       {/* Board type */}
       <div className="space-y-1.5">
@@ -217,29 +283,6 @@ export function BoardFilters({ shapers, cities }: BoardFiltersProps) {
               {shapers.map((s) => (
                 <SelectItem key={s} value={s}>
                   {s}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      )}
-
-      {/* City */}
-      {cities.length > 0 && (
-        <div className="space-y-1.5">
-          <Label className="text-xs text-muted-foreground uppercase tracking-wide">Cidade</Label>
-          <Select
-            value={searchParams.get("city") || "all"}
-            onValueChange={(v) => updateSelect("city", v)}
-          >
-            <SelectTrigger className="h-9 w-full">
-              <SelectValue placeholder="Todas as cidades" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Todas as cidades</SelectItem>
-              {cities.map((c) => (
-                <SelectItem key={c} value={c}>
-                  {c}
                 </SelectItem>
               ))}
             </SelectContent>
