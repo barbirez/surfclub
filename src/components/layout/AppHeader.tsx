@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Waves, LayoutDashboard, Search, CalendarDays, Settings, LogOut, ChevronDown } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export function AppHeader() {
   const { data: session } = useSession();
@@ -48,7 +49,9 @@ export function AppHeader() {
           </Button>
         </nav>
 
-        <DropdownMenu>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <DropdownMenu>
           <DropdownMenuTrigger
             className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-secondary transition-colors"
           >
@@ -84,7 +87,8 @@ export function AppHeader() {
               Sair
             </DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenu>
+          </DropdownMenu>
+        </div>
       </div>
     </header>
   );

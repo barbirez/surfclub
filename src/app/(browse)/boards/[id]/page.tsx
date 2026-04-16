@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { ReservationModal } from "@/components/reservations/ReservationModal";
 import { BoardCard } from "@/components/boards/BoardCard";
 import { BoardDetailImage } from "@/components/boards/BoardDetailImage";
+import { BoardSpecsSection } from "@/components/boards/BoardSpecsSection";
 
 const BOARD_TYPE_LABELS: Record<string, string> = {
   SHORTBOARD: "Shortboard",
@@ -163,7 +164,8 @@ export default async function BoardDetailPage({
         </div>
       </div>
 
-      <Separator />
+      {/* ── Specs ── */}
+      <BoardSpecsSection board={board} />
 
       {/* ── Location ── */}
       <div className="rounded-2xl border border-border bg-card p-5 space-y-4">

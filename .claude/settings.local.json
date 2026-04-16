@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git push:*)",
+      "Bash(git checkout:*)",
+      "Bash(grep -E \"\\\\.\\(tsx|ts\\)$\")",
+      "Bash(npm run:*)",
+      "Bash(npx tsc:*)",
+      "Bash(git -C /Users/barbararezende/surfclub add -A)",
+      "Bash(git -C /Users/barbararezende/surfclub status)",
+      "Bash(git -C /Users/barbararezende/surfclub unstage .claude/worktrees/jovial-shtern .claude/worktrees/vibrant-driscoll)",
+      "Bash(git -C /Users/barbararezende/surfclub restore --staged .claude/worktrees/jovial-shtern .claude/worktrees/vibrant-driscoll)",
+      "Bash(git add:*)"
+    ]
+  }
+}

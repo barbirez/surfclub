@@ -14,52 +14,14 @@ import {
 import { PricingSection } from "@/components/layout/PricingSection";
 import { LandingNav } from "@/components/layout/LandingNav";
 import { LandingFooter } from "@/components/layout/LandingFooter";
+import { HeroSection } from "@/components/layout/HeroSection";
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background">
       <LandingNav />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden px-4 pb-20 pt-16 sm:px-6 sm:pt-24 lg:pt-32">
-        {/* Background glow */}
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="h-[600px] w-[600px] rounded-full bg-primary/5 blur-3xl" />
-        </div>
-        <div className="relative mx-auto max-w-4xl text-center">
-          <Badge className="mb-6 bg-primary/10 text-primary border-primary/20">
-            🏄 Pranchas disponíveis na sua praia
-          </Badge>
-          <h1 className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-            Alugue a prancha certa{" "}
-            <span className="text-primary">para as condições</span>
-            <br />
-            de hoje
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground leading-relaxed">
-            Assinatura de aluguel de pranchas com reserva simples: escolha, confirme
-            datas, pegue, surfe e devolva. Sem complicação.
-          </p>
-          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Button
-              asChild
-              size="lg"
-              className="h-12 px-8 text-base font-semibold"
-            >
-              <Link href="/login">
-                Começar grátis
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="h-12 px-8 text-base">
-              <Link href="/pricing">Ver planos</Link>
-            </Button>
-          </div>
-          <p className="mt-4 text-xs text-muted-foreground">
-            14 dias grátis · Sem cartão para começar
-          </p>
-        </div>
-      </section>
+      <HeroSection />
 
       {/* Social proof strip */}
       <div className="border-y border-border/50 bg-card/30 py-4">
@@ -78,10 +40,10 @@ export default function LandingPage() {
       {/* Features */}
       <section id="features" className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
         <div className="text-center mb-12">
-          <Badge className="mb-4 bg-accent/10 text-accent border-accent/20">Funcionalidades</Badge>
-          <h2 className="text-3xl font-bold">Tudo que você precisa para surfar bem</h2>
+          <Badge className="mb-4 bg-accent/10 text-accent border-accent/20">Como funciona</Badge>
+          <h2 className="text-3xl font-bold">Do sofá à praia sem complicação</h2>
           <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
-            Do filtro até a devolução — uma experiência simples e completa.
+            Quiver completo disponível. Você escolhe, reserva, retira e surfa.
           </p>
         </div>
 
@@ -124,9 +86,9 @@ export default function LandingPage() {
             },
             {
               icon: Star,
-              title: "Assinatura flexível",
+              title: "Assinatura mensal",
               description:
-                "Plano mensal. Reserve quantas vezes quiser durante o mês. Cancele quando quiser, sem fidelidade.",
+                "R$ 289/mês. Reserve quantas vezes quiser. Cancele quando quiser, sem fidelidade.",
               color: "text-yellow-400 bg-yellow-400/10",
             },
           ].map((feature) => (

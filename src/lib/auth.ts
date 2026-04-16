@@ -35,10 +35,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async createUser({ user }) {
       await db.user.update({
         where: { id: user.id },
-        data: {
-          plan: "TRIAL",
-          trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
-        },
+        data: { plan: "FREE" },
       });
     },
   },

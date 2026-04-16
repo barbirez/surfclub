@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { MapPin, Droplets } from "lucide-react";
 
 const BOARD_TYPE_LABELS: Record<string, string> = {
@@ -30,75 +31,34 @@ interface BoardCardProps {
 
 export function BoardCard({ board }: BoardCardProps) {
   const frontImage = board.images[0];
-  const backImage = board.images[1];
-  const hasFlip = !!(frontImage && backImage);
 
   return (
     <Link href={`/boards/${board.id}`} className="group block">
       <Card className="overflow-hidden border-border/50 py-0 gap-0 transition-all duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5">
-        {/* Flip container */}
-        <div
-          className="relative aspect-[3/4] bg-secondary"
-          style={{ perspective: "900px" }}
-        >
-          <div
-            className="absolute inset-0"
-            style={{
-              transformStyle: "preserve-3d",
-              transition: hasFlip ? "transform 0.65s cubic-bezier(0.4, 0, 0.2, 1)" : undefined,
-            }}
-            /* Tailwind can't do this dynamically so we use a CSS class trick */
-          >
-            <style>{`
-              .board-flip-inner {
-                transform-style: preserve-3d;
-                transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
-              }
-              .group:hover .board-flip-inner {
-                transform: rotateY(180deg);
-              }
-            `}</style>
-
-            <div className="board-flip-inner absolute inset-0">
-              {/* Front face */}
-              <div
-                className="absolute inset-0"
-                style={{ backfaceVisibility: "hidden" }}
-              >
-                {frontImage ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={frontImage}
-                    alt={board.name}
-                    className="h-full w-full object-contain object-top"
-                  />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center">
-                    <div className="text-5xl opacity-20">🏄</div>
-                  </div>
-                )}
-              </div>
-
-              {/* Back face */}
-              {hasFlip && (
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    backfaceVisibility: "hidden",
-                    transform: "rotateY(180deg)",
-                  }}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={backImage}
-                    alt={`${board.name} — verso`}
-                    className="h-full w-full object-contain object-top"
-                  />
-                </div>
-              )}
+        {/* Image container */}
+        <div className="relative aspect-[3/4] bg-secondary">
+          {frontImage ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={frontImage}
+              alt={board.name}
+              className="h-full w-full object-contain object-top"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center">
+              <div className="text-5xl opacity-20">🏄</div>
             </div>
-          </div>
+          )}
 
+          {/* Hover overlay button */}
+          <div className="absolute inset-0 flex items-end justify-center pb-4 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+            <Button
+              size="sm"
+              className="pointer-events-none font-semibold tracking-wide shadow-lg"
+            >
+              VER PRANCHA
+            </Button>
+          </div>
         </div>
 
         <CardContent className="p-4">

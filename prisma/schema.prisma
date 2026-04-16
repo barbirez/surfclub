@@ -109,17 +109,20 @@ enum SurfboardStatus {
 }
 
 model Surfboard {
-  id             String          @id @default(cuid())
-  name           String
-  locationId     String
-  type           SurfboardType
-  shaper         String?
-  size           String
-  volumeLiters   Float
-  description    String?         @db.Text
-  conditionProfile String?       @db.Text
-  images         String[]
-  status         SurfboardStatus @default(AVAILABLE)
+  id               String          @id @default(cuid())
+  name             String
+  locationId       String
+  type             SurfboardType
+  shaper           String?
+  size             String
+  sizeInches       Float?
+  volumeLiters     Float
+  dimensions       String?
+  finSetup         String?
+  description      String?         @db.Text
+  conditionProfile String?         @db.Text
+  images           String[]
+  status           SurfboardStatus @default(AVAILABLE)
 
   location     Location      @relation(fields: [locationId], references: [id])
   reservations Reservation[]

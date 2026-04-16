@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Waves } from "lucide-react";
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export function LandingNav() {
   const { scrollTo } = useSmoothScroll();
@@ -53,12 +54,13 @@ export function LandingNav() {
           </a>
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
           <Button asChild variant="ghost" size="sm">
             <Link href="/login">Entrar</Link>
           </Button>
           <Button asChild size="sm">
-            <Link href="/login">Começar grátis</Link>
+            <Link href="/pricing">Assinar agora</Link>
           </Button>
         </div>
       </div>

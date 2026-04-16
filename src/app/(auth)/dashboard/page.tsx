@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
-import { hasAccess, daysLeftInTrial, isSubscribed } from "@/lib/subscription";
+import { hasAccess, isSubscribed } from "@/lib/subscription";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -33,7 +33,6 @@ export default async function DashboardPage() {
 
   const access = hasAccess(user);
   const subscribed = isSubscribed(user);
-  const trialDays = daysLeftInTrial(user);
 
   return (
     <div className="space-y-8">
@@ -61,7 +60,7 @@ export default async function DashboardPage() {
           <CardContent>
             <div className="flex items-center gap-2">
               <span className="text-2xl font-bold">
-                {subscribed ? "PRO" : user.plan === "TRIAL" ? "Trial" : "Free"}
+                {subscribed ? "PRO" : "Free"}
               </span>
               <Badge
                 variant={access ? "default" : "secondary"}
@@ -70,11 +69,6 @@ export default async function DashboardPage() {
                 {access ? "Ativo" : "Inativo"}
               </Badge>
             </div>
-            {user.plan === "TRIAL" && trialDays > 0 && (
-              <p className="mt-1 text-xs text-muted-foreground">
-                {trialDays} dias restantes
-              </p>
-            )}
           </CardContent>
         </Card>
 

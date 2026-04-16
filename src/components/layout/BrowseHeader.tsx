@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Waves, Search, CalendarDays, LayoutDashboard, Settings, LogOut, ChevronDown } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 interface BrowseHeaderProps {
   isLoggedIn: boolean;
@@ -57,6 +58,8 @@ export function BrowseHeader({ isLoggedIn, userName, userImage }: BrowseHeaderPr
           )}
         </nav>
 
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
         {isLoggedIn ? (
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-secondary transition-colors">
@@ -95,10 +98,11 @@ export function BrowseHeader({ isLoggedIn, userName, userImage }: BrowseHeaderPr
               <Link href="/login">Entrar</Link>
             </Button>
             <Button asChild size="sm">
-              <Link href="/login">Começar grátis</Link>
+              <Link href="/pricing">Assinar agora</Link>
             </Button>
           </div>
         )}
+        </div>
       </div>
     </header>
   );

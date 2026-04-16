@@ -15,12 +15,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EasySurf — Alugue a prancha certa para as condições de hoje",
+  title: "EasySurf — Sua prancha esperando. Bora.",
   description:
-    "Assinatura de aluguel de pranchas com reserva simples: escolha, confirme datas, pegue, surfe e devolva.",
+    "Assine e tenha acesso a um quiver completo. Escolha a prancha certa para as condições do dia, retire, surfe e devolva. Simples assim.",
   openGraph: {
     title: "EasySurf",
-    description: "Alugue a prancha certa para as condições de hoje",
+    description: "Sua prancha esperando. Bora.",
     type: "website",
   },
 };
@@ -31,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className="dark">
+    <html lang="pt-BR" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers>{children}</Providers>
         <Toaster />
