@@ -8,7 +8,6 @@ import {
   ShieldCheck,
   Droplets,
   MapPin,
-  ArrowRight,
   Star,
 } from "lucide-react";
 import { PricingSection } from "@/components/layout/PricingSection";
@@ -40,10 +39,10 @@ export default function LandingPage() {
       {/* Features */}
       <section id="features" className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
         <div className="text-center mb-12">
-          <Badge className="mb-4 bg-accent/10 text-accent border-accent/20">Como funciona</Badge>
-          <h2 className="text-3xl font-bold">Do sofá à praia sem complicação</h2>
+          <Badge className="mb-4 bg-accent/10 text-accent border-accent/20">Funcionalidades</Badge>
+          <h2 className="text-3xl font-bold">Tudo que você precisa para surfar bem</h2>
           <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
-            Quiver completo disponível. Você escolhe, reserva, retira e surfa.
+            Do filtro até a devolução — uma experiência simples e completa.
           </p>
         </div>
 
@@ -86,9 +85,9 @@ export default function LandingPage() {
             },
             {
               icon: Star,
-              title: "Assinatura mensal",
+              title: "Assinatura flexível",
               description:
-                "R$ 289/mês. Reserve quantas vezes quiser. Cancele quando quiser, sem fidelidade.",
+                "Plano mensal. Reserve quantas vezes quiser durante o mês. Cancele quando quiser, sem fidelidade.",
               color: "text-yellow-400 bg-yellow-400/10",
             },
           ].map((feature) => (
