@@ -14,27 +14,24 @@ import { PricingSection } from "@/components/layout/PricingSection";
 import { LandingNav } from "@/components/layout/LandingNav";
 import { LandingFooter } from "@/components/layout/LandingFooter";
 import { HeroSection } from "@/components/layout/HeroSection";
+import { BoardCarousel } from "@/components/boards/BoardCarousel";
+import { db } from "@/lib/db";
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const boards = await db.surfboard.findMany({
+    where: { status: "AVAILABLE" },
+    include: { location: { select: { city: true, town: true } } },
+    orderBy: { createdAt: "desc" },
+    take: 12,
+  });
   return (
     <div className="min-h-screen bg-background">
       <LandingNav />
 
       <HeroSection />
 
-      {/* Social proof strip */}
-      <div className="border-y border-border/50 bg-card/30 py-4">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
-            {["Florianópolis", "Ubatuba", "Itacoatiara", "Maresias", "Joaquina"].map((location) => (
-              <div key={location} className="flex items-center gap-1.5">
-                <MapPin className="h-3.5 w-3.5 text-primary" />
-                {location}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      {/* Board carousel */}
+      <BoardCarousel boards={boards} />
 
       {/* Features */}
       <section id="features" className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
