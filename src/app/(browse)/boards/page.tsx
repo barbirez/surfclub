@@ -35,38 +35,53 @@ export default async function BoardsPage({ searchParams }: PageProps) {
     }
   }
 
-  const [boards, filterOptions] = await Promise.all([
+  // Build where clause without sizeInches (applied as post-filter)
+  const where: Prisma.SurfboardWhereInput = {
+    status: "AVAILABLE",
+    ...(type && type !== "all" && VALID_TYPES.has(type) && { type: type as SurfboardType }),
+    ...(shaper && shaper !== "all" && { shaper }),
+    ...(city && city !== "all" ? { location: { city } } : {}),
+    ...(minVolume || maxVolume
+      ? {
+          volumeLiters: {
+            ...(minVolume ? { gte: parseFloat(minVolume) } : {}),
+            ...(maxVolume ? { lte: parseFloat(maxVolume) } : {}),
+          },
+        }
+      : {}),
+    ...(searchConditions.length > 0 ? { OR: searchConditions } : {}),
+  };
+
+  const [allBoards, filterOptions] = await Promise.all([
     db.surfboard.findMany({
-      where: {
-        status: "AVAILABLE",
-        ...(type && type !== "all" && VALID_TYPES.has(type) && { type: type as SurfboardType }),
-        ...(shaper && shaper !== "all" && { shaper }),
-        ...(city && city !== "all" ? { location: { city } } : {}),
-        ...(minVolume || maxVolume
-          ? {
-              volumeLiters: {
-                ...(minVolume ? { gte: parseFloat(minVolume) } : {}),
-                ...(maxVolume ? { lte: parseFloat(maxVolume) } : {}),
-              },
-            }
-          : {}),
-        ...(minSize || maxSize
-          ? {
-              sizeInches: {
-                ...(minSize ? { gte: parseFloat(minSize) } : {}),
-                ...(maxSize ? { lte: parseFloat(maxSize) } : {}),
-              },
-            }
-          : {}),
-        ...(searchConditions.length > 0 ? { OR: searchConditions } : {}),
-      },
-      include: {
-        location: { select: { city: true, town: true } },
-      },
+      where,
+      include: { location: { select: { city: true, town: true } } },
       orderBy: { createdAt: "desc" },
     }),
     getFilterOptions(),
   ]);
+
+  // Size filter: parse the size string (e.g. "6'2" → 6.17) and filter client-side
+  function parseSizeFeet(size: string): number | null {
+    const match = size.match(/(\d+)[''′]?\s*(\d+)?/);
+    if (!match) return null;
+    const feet = parseInt(match[1], 10);
+    const inches = match[2] ? parseInt(match[2], 10) : 0;
+    return feet + inches / 12;
+  }
+
+  const minSizeNum = minSize ? parseFloat(minSize) : null;
+  const maxSizeNum = maxSize ? parseFloat(maxSize) : null;
+
+  const boards = (minSizeNum !== null || maxSizeNum !== null)
+    ? allBoards.filter((b) => {
+        const parsed = parseSizeFeet(b.size);
+        if (parsed === null) return false;
+        if (minSizeNum !== null && parsed < minSizeNum) return false;
+        if (maxSizeNum !== null && parsed > maxSizeNum) return false;
+        return true;
+      })
+    : allBoards;
 
   return (
     <div className="space-y-6">

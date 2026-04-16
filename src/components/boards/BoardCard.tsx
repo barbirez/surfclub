@@ -36,7 +36,7 @@ export function BoardCard({ board }: BoardCardProps) {
 
   return (
     <Link href={`/boards/${board.id}`} className="group block">
-      <Card className="overflow-hidden border-border/50 py-0 gap-0 transition-all duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5">
+      <Card className="h-full overflow-hidden border-border/50 py-0 gap-0 transition-all duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 flex flex-col">
         {/* Flip container */}
         <div
           className="relative aspect-[3/4] bg-secondary"
@@ -63,7 +63,7 @@ export function BoardCard({ board }: BoardCardProps) {
                 <img
                   src={frontImage}
                   alt={board.name}
-                  className="h-full w-full object-contain object-top"
+                  className="h-full w-full object-contain object-top transition-transform duration-500 group-hover:scale-105"
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center">
@@ -85,7 +85,7 @@ export function BoardCard({ board }: BoardCardProps) {
                 <img
                   src={backImage}
                   alt={`${board.name} — verso`}
-                  className="h-full w-full object-contain object-top"
+                  className="h-full w-full object-contain object-top transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
             )}
@@ -102,9 +102,9 @@ export function BoardCard({ board }: BoardCardProps) {
           </div>
         </div>
 
-        <CardContent className="p-4">
-          <div className="flex items-start justify-between gap-2">
-            <div>
+        <CardContent className="flex flex-1 flex-col p-4">
+          <div className="flex items-start justify-between gap-2 flex-1">
+            <div className="min-w-0">
               <p className="font-semibold leading-tight">{board.name}</p>
               {board.shaper && (
                 <p className="text-xs text-muted-foreground mt-0.5">{board.shaper}</p>
