@@ -117,7 +117,7 @@ export function BoardFilters({ shapers, cities, spots }: BoardFiltersProps) {
   const hasFilters = FILTER_KEYS.some((k) => searchParams.get(k));
 
   return (
-    <aside className="w-72 shrink-0 space-y-6 rounded-xl border border-border bg-card p-5">
+    <aside className="w-72 shrink-0 sticky top-[5rem] self-start max-h-[calc(100vh-6rem)] overflow-y-auto space-y-6 rounded-xl border border-border bg-card p-5">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <SlidersHorizontal className="h-4 w-4 text-muted-foreground" />

@@ -39,7 +39,7 @@ export function PaywallGate({
             <p className="text-sm text-muted-foreground">{description}</p>
             <Button
               className="w-full bg-accent text-accent-foreground hover:bg-accent/90 font-semibold"
-              onClick={() => router.push("/pricing")}
+              onClick={() => router.push("/#pricing")}
             >
               Ver planos
             </Button>

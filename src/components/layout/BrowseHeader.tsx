@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Waves, Search, CalendarDays, LayoutDashboard, Settings, LogOut, ChevronDown } from "lucide-react";
+import { Search, CalendarDays, LayoutDashboard, Settings, LogOut, ChevronDown } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 interface BrowseHeaderProps {
@@ -26,11 +27,14 @@ export function BrowseHeader({ isLoggedIn, userName, userImage }: BrowseHeaderPr
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-            <Waves className="h-4 w-4 text-white" />
-          </div>
-          <span className="font-bold text-lg tracking-tight">EasySurf</span>
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/surfpack-logo.svg"
+            alt="EasySurf"
+            width={150}
+            height={34}
+            className="w-[150px] h-auto dark:invert"
+          />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">

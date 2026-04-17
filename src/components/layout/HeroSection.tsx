@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
@@ -23,15 +24,25 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden px-4 pb-20 pt-16 sm:px-6 sm:pt-24 lg:pt-32">
-      {/* Background glow */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <div className="h-[600px] w-[600px] rounded-full bg-primary/5 blur-3xl" />
-      </div>
+    <section className="relative overflow-hidden px-4 pb-20 pt-16 sm:px-6 sm:pt-24 lg:pt-32 min-h-[600px] flex items-center">
+      {/* Background image */}
+      <Image
+        src="/hero-beach.jpg"
+        alt="Beach waves at sunrise"
+        fill
+        priority
+        className="object-cover object-top"
+        sizes="100vw"
+      />
 
-      <div className="relative mx-auto max-w-4xl text-center">
+      {/* Gradient overlay — ensures text legibility on both themes */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background/75 via-background/60 to-background/85" />
+      {/* Side vignette */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/40" />
+
+      <div className="relative mx-auto w-full max-w-4xl text-center">
         {/* Eyebrow */}
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
+        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/20 px-4 py-1.5 text-sm font-medium text-primary backdrop-blur-sm">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
@@ -40,7 +51,7 @@ export function HeroSection() {
         </div>
 
         {/* Headline with animated city tag */}
-        <h1 className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+        <h1 className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl drop-shadow-lg">
           Chegou em{" "}
           <span
             className="inline-block rounded-lg bg-primary px-3 py-0.5 text-primary-foreground transition-all duration-300"
@@ -58,21 +69,26 @@ export function HeroSection() {
         </h1>
 
         {/* Subheadline */}
-        <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground leading-relaxed">
+        <p className="mx-auto mt-6 max-w-2xl text-lg text-foreground/80 leading-relaxed drop-shadow-sm">
           Assine e tenha acesso a um quiver completo — escolha a prancha certa para
           as condições do dia, retire, surfe e devolva. Simples assim.
         </p>
 
         {/* CTAs */}
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-          <Button asChild size="lg" className="h-12 px-8 text-base font-semibold">
+          <Button asChild size="lg" className="h-12 px-8 text-base font-semibold shadow-lg">
             <Link href="/boards">
               Ver pranchas disponíveis
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
-          <Button asChild variant="outline" size="lg" className="h-12 px-8 text-base">
-            <Link href="/pricing">Ver planos</Link>
+          <Button
+            asChild
+            variant="outline"
+            size="lg"
+            className="h-12 px-8 text-base backdrop-blur-sm bg-background/30 border-foreground/30 hover:bg-background/50"
+          >
+            <Link href="/#pricing">Ver planos</Link>
           </Button>
         </div>
       </div>

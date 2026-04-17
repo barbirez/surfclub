@@ -99,7 +99,7 @@ export function ReservationForm({
           </div>
           <Button
             className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
-            onClick={() => router.push("/pricing")}
+            onClick={() => router.push("/#pricing")}
           >
             Ver planos
           </Button>
@@ -236,15 +236,34 @@ export function ReservationForm({
           />
         </div>
 
-        {range?.from && range?.to && (
-          <div className="rounded-lg bg-secondary p-3 text-sm text-center">
-            <span className="text-muted-foreground">Período selecionado: </span>
-            <span className="font-medium">
-              {format(range.from, "dd/MM/yyyy", { locale: ptBR })} →{" "}
-              {format(range.to, "dd/MM/yyyy", { locale: ptBR })}
-            </span>
-          </div>
-        )}
+        <div
+          className="rounded-lg bg-secondary p-3 text-sm text-center transition-all duration-200"
+          style={{
+            opacity: range?.from ? 1 : 0,
+            transform: range?.from ? "translateY(0)" : "translateY(-4px)",
+            pointerEvents: range?.from ? "auto" : "none",
+          }}
+        >
+          {range?.from && !range?.to ? (
+            <>
+              <span className="text-muted-foreground">De: </span>
+              <span className="font-medium">
+                {format(range.from, "dd/MM/yyyy", { locale: ptBR })}
+              </span>
+              <span className="text-muted-foreground ml-1">→ selecione a volta</span>
+            </>
+          ) : range?.from && range?.to ? (
+            <>
+              <span className="text-muted-foreground">Período selecionado: </span>
+              <span className="font-medium">
+                {format(range.from, "dd/MM/yyyy", { locale: ptBR })} →{" "}
+                {format(range.to, "dd/MM/yyyy", { locale: ptBR })}
+              </span>
+            </>
+          ) : (
+            <span className="text-muted-foreground">Selecione a data de início</span>
+          )}
+        </div>
 
         <Button
           className="w-full"
