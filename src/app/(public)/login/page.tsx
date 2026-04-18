@@ -7,7 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Waves, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
+import Image from "next/image";
 import { toast } from "sonner";
 
 export default function LoginPage() {
@@ -34,15 +35,16 @@ export default function LoginPage() {
       <div className="w-full max-w-sm space-y-6">
         {/* Logo */}
         <div className="flex flex-col items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary">
-            <Waves className="h-6 w-6 text-white" />
-          </div>
-          <div className="text-center">
-            <h1 className="text-2xl font-bold">EasySurf</h1>
-            <p className="text-sm text-muted-foreground mt-1">
-              Alugue a prancha certa para as condições de hoje
-            </p>
-          </div>
+          <Image
+            src="/surfpack-logo.svg"
+            alt="Surf Pack"
+            width={160}
+            height={46}
+            className="w-[160px] h-auto dark:invert"
+          />
+          <p className="text-sm text-muted-foreground text-center">
+            Alugue a prancha certa para as condições de hoje
+          </p>
         </div>
 
         <Card className="border-border">

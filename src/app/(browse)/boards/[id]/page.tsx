@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button";
 import { ReservationModal } from "@/components/reservations/ReservationModal";
 import { BoardCard } from "@/components/boards/BoardCard";
 import { BoardDetailImage } from "@/components/boards/BoardDetailImage";
-import { BoardSpecsSection } from "@/components/boards/BoardSpecsSection";
 
 const BOARD_TYPE_LABELS: Record<string, string> = {
   SHORTBOARD: "Shortboard",
@@ -130,23 +129,19 @@ export default async function BoardDetailPage({
             </div>
           </div>
 
-          {board.description && (
-            <div>
+          {(board.description || board.conditionProfile) && (
+            <div className="space-y-2">
               <h3 className="font-semibold text-sm mb-1.5">Descrição</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {board.description}
-              </p>
-            </div>
-          )}
-
-          {board.conditionProfile && (
-            <div className="rounded-xl border border-primary/20 bg-primary/5 p-4">
-              <h3 className="font-semibold text-sm mb-1.5 text-primary">
-                Para qual mar essa prancha serve?
-              </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {board.conditionProfile}
-              </p>
+              {board.description && (
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {board.description}
+                </p>
+              )}
+              {board.conditionProfile && (
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {board.conditionProfile}
+                </p>
+              )}
             </div>
           )}
 
@@ -163,9 +158,6 @@ export default async function BoardDetailPage({
           />
         </div>
       </div>
-
-      {/* ── Specs ── */}
-      <BoardSpecsSection board={board} />
 
       {/* ── Location ── */}
       <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
