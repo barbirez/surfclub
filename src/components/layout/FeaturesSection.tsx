@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "motion/react";
+import { motion, type Variants } from "motion/react";
 import { Search, CalendarCheck, ShieldCheck, Droplets, MapPin, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { FeatureCard } from "@/components/ui/feature-card";
@@ -43,7 +43,7 @@ const features = [
   },
 ];
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -51,7 +51,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { y: 24, opacity: 0 },
   visible: {
     y: 0,
