@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Search, CalendarDays, LayoutDashboard, Settings, LogOut, ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 
 interface BrowseHeaderProps {
