@@ -14,10 +14,10 @@ const TRUST_SIGNALS = [
 ];
 
 const YT_SRC =
-  "https://www.youtube-nocookie.com/embed/o8kisgyhnos" +
-  "?autoplay=1&mute=1&controls=0&loop=1&playlist=o8kisgyhnos" +
+  "https://www.youtube-nocookie.com/embed/o53RMk0IaiQ" +
+  "?autoplay=1&mute=1&controls=0&loop=1&playlist=o53RMk0IaiQ" +
   "&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0" +
-  "&playsinline=1&start=8&end=53";
+  "&playsinline=1";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
