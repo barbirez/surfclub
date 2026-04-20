@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export function LandingNav() {
   const { scrollTo } = useSmoothScroll();
@@ -16,31 +15,24 @@ export function LandingNav() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-6 sm:px-10">
         <Link href="/" className="flex items-center">
           <Image
-            src="/surfpack-logo.svg"
-            alt="EasySurf"
+            src="/logo-wavyclub.svg"
+            alt="WavyClub"
             width={150}
             height={34}
-            className="w-[150px] h-auto dark:invert"
+            className="w-[180px] h-auto"
           />
         </Link>
 
-        <nav className="hidden items-center gap-6 text-sm md:flex">
+        <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
           <Link
             href="/boards"
             className="text-muted-foreground hover:text-foreground transition-colors"
           >
             Pranchas
           </Link>
-          <a
-            href="#features"
-            onClick={(e) => handleAnchor(e, "features")}
-            className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-          >
-            Funcionalidades
-          </a>
           <a
             href="#how-it-works"
             onClick={(e) => handleAnchor(e, "how-it-works")}
@@ -53,16 +45,15 @@ export function LandingNav() {
             onClick={(e) => handleAnchor(e, "pricing")}
             className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
           >
-            Preços
+            Planos
           </a>
         </nav>
 
         <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <Button asChild variant="ghost" size="sm">
+          <Button asChild variant="ghost" size="sm" className="font-medium">
             <Link href="/login">Entrar</Link>
           </Button>
-          <Button asChild size="sm">
+          <Button asChild size="sm" className="h-9 px-5 font-semibold rounded-full">
             <Link href="/pricing">Assinar agora</Link>
           </Button>
         </div>

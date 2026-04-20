@@ -11,7 +11,7 @@ const VALUE_PROPS = [
   {
     emoji: "\uD83C\uDFC4",
     title: "Voc\u00ea surfa sempre na mesma praia?",
-    text: "Para de perder sess\u00e3o por falta de prancha certa. Com o EasySurf voc\u00ea tem um quiver completo dispon\u00edvel.",
+    text: "Para de perder sess\u00e3o por falta de prancha certa. Com o WavyClub voc\u00ea tem um quiver completo dispon\u00edvel.",
   },
   {
     emoji: "\uD83D\uDCC8",
@@ -25,7 +25,7 @@ export function ValuePropsSection() {
     <section className="mx-auto max-w-4xl px-4 py-24 sm:px-6 space-y-20">
       {VALUE_PROPS.map((prop) => (
         <div key={prop.title} className="space-y-2">
-          <h3 className="text-lg font-bold text-primary px-4">
+          <h3 className="text-lg font-bold text-primary-light px-4">
             {prop.emoji} {prop.title}
           </h3>
           <MagicText text={prop.text} />

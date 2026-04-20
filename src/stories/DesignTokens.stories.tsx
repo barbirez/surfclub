@@ -176,7 +176,7 @@ export function DesignTokensPage() {
           }}>
             🌊
           </div>
-          <span style={{ fontSize: "1.125rem", fontWeight: 700, letterSpacing: "-0.01em" }}>EasySurf</span>
+          <span style={{ fontSize: "1.125rem", fontWeight: 700, letterSpacing: "-0.01em" }}>WavyClub</span>
         </div>
         <h1 style={{ margin: "0 0 0.25rem", fontSize: tokens.typography["3xl"], fontWeight: 800, letterSpacing: "-0.02em" }}>
           Design Tokens

@@ -36,11 +36,11 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="flex flex-col items-center gap-3">
           <Image
-            src="/surfpack-logo.svg"
+            src="/logo-wavyclub.svg"
             alt="Surf Pack"
             width={160}
             height={46}
-            className="w-[160px] h-auto dark:invert"
+            className="w-[160px] h-auto"
           />
           <p className="text-sm text-muted-foreground text-center">
             Alugue a prancha certa para as condições de hoje

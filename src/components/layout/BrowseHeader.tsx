@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Search, CalendarDays, LayoutDashboard, Settings, LogOut, ChevronDown } from "lucide-react";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
+
 
 interface BrowseHeaderProps {
   isLoggedIn: boolean;
@@ -26,44 +25,38 @@ export function BrowseHeader({ isLoggedIn, userName, userImage }: BrowseHeaderPr
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-6 sm:px-10">
         <Link href="/" className="flex items-center">
           <Image
-            src="/surfpack-logo.svg"
-            alt="EasySurf"
+            src="/logo-wavyclub.svg"
+            alt="WavyClub"
             width={150}
             height={34}
-            className="w-[150px] h-auto dark:invert"
+            className="w-[180px] h-auto"
           />
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
-          <Button asChild variant="ghost" size="sm">
-            <Link href="/boards" className="flex items-center gap-1.5">
-              <Search className="h-4 w-4" />
-              Pranchas
-            </Link>
-          </Button>
+        <nav className="hidden items-center gap-6 md:flex">
+          <Link href="/boards" className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            <Search className="h-4 w-4" />
+            Pranchas
+          </Link>
           {isLoggedIn && (
             <>
-              <Button asChild variant="ghost" size="sm">
-                <Link href="/reservations" className="flex items-center gap-1.5">
-                  <CalendarDays className="h-4 w-4" />
-                  Reservas
-                </Link>
-              </Button>
-              <Button asChild variant="ghost" size="sm">
-                <Link href="/dashboard" className="flex items-center gap-1.5">
-                  <LayoutDashboard className="h-4 w-4" />
-                  Dashboard
-                </Link>
-              </Button>
+              <Link href="/reservations" className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                <CalendarDays className="h-4 w-4" />
+                Reservas
+              </Link>
+              <Link href="/dashboard" className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                <LayoutDashboard className="h-4 w-4" />
+                Dashboard
+              </Link>
             </>
           )}
         </nav>
 
         <div className="flex items-center gap-2">
-          <ThemeToggle />
+           
         {isLoggedIn ? (
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-secondary transition-colors">

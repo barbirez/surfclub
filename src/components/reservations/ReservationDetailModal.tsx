@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import {
   CalendarDays,
   MapPin,
@@ -17,7 +16,8 @@ import {
   Droplets,
   AlertTriangle,
   ExternalLink,
-  X,
+  Trash2,
+  ArrowRight,
 } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -33,11 +33,11 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 const STATUS_STYLES: Record<string, string> = {
-  PENDING: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
-  CONFIRMED: "bg-primary/10 text-primary border-primary/20",
-  ACTIVE: "bg-green-500/10 text-green-400 border-green-500/20",
-  RETURNED: "bg-muted text-muted-foreground border-muted",
-  CANCELLED: "bg-destructive/10 text-destructive border-destructive/20",
+  PENDING: "bg-yellow-500/15 text-yellow-300 border-yellow-500/30",
+  CONFIRMED: "bg-primary/15 text-primary-light border-primary/30",
+  ACTIVE: "bg-green-500/15 text-green-300 border-green-500/30",
+  RETURNED: "bg-muted/60 text-muted-foreground border-border",
+  CANCELLED: "bg-destructive/15 text-destructive border-destructive/30",
 };
 
 export type ReservationDetail = {
@@ -122,40 +122,63 @@ export function ReservationDetailModal({
   }
 
   return (
-    <Dialog open={open} onOpenChange={(v) => { if (!v) { onClose(); setShowConfirm(false); } }}>
-      <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <div className="flex items-center justify-between gap-3">
-            <DialogTitle className="text-lg">Detalhes da Reserva</DialogTitle>
-            <Badge variant="secondary" className={STATUS_STYLES[reservation.status]}>
-              {STATUS_LABELS[reservation.status]}
-            </Badge>
-          </div>
+    <Dialog
+      open={open}
+      onOpenChange={(v) => {
+        if (!v) {
+          onClose();
+          setShowConfirm(false);
+        }
+      }}
+    >
+      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto p-0 gap-0">
+        {/* ── Header ── */}
+        <DialogHeader className="px-5 pt-5 pb-4 pr-12 border-b border-border/60">
+          <DialogTitle className="text-base font-semibold">
+            Detalhes da Reserva
+          </DialogTitle>
+          <Badge
+            variant="secondary"
+            className={`self-start ${STATUS_STYLES[reservation.status]}`}
+          >
+            {STATUS_LABELS[reservation.status]}
+          </Badge>
         </DialogHeader>
 
-        <div className="space-y-5">
-          {/* Board */}
-          <div className="flex items-center gap-4">
-            <div className="h-20 w-16 shrink-0 overflow-hidden rounded-lg bg-secondary">
+        <div className="px-5 py-4 space-y-5">
+          {/* ── Board ── */}
+          <div className="flex items-start gap-4">
+            {/* Thumbnail */}
+            <div className="h-28 w-20 shrink-0 overflow-hidden rounded-xl bg-secondary border border-border/60">
               {reservation.surfboard.images[0] ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={reservation.surfboard.images[0]}
                   alt={reservation.surfboard.name}
-                  className="h-full w-full object-contain p-1"
+                  className="h-full w-full object-contain p-2"
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center text-2xl opacity-20">🏄</div>
+                <div className="flex h-full w-full items-center justify-center text-2xl opacity-20">
+                  🏄
+                </div>
               )}
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="font-semibold text-base leading-tight">{reservation.surfboard.name}</p>
+
+            {/* Info */}
+            <div className="flex-1 min-w-0 pt-0.5">
+              <p className="font-bold text-base leading-tight">
+                {reservation.surfboard.name}
+              </p>
               {reservation.surfboard.shaper && (
-                <p className="text-xs text-muted-foreground mt-0.5">{reservation.surfboard.shaper}</p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  {reservation.surfboard.shaper}
+                </p>
               )}
-              <div className="flex flex-wrap items-center gap-2 mt-2">
-                <Badge variant="secondary" className="text-xs">
-                  {BOARD_TYPE_LABELS[reservation.surfboard.type] || reservation.surfboard.type}
+
+              <div className="flex flex-wrap items-center gap-1.5 mt-3">
+                <Badge variant="secondary" className="text-xs h-5 px-2">
+                  {BOARD_TYPE_LABELS[reservation.surfboard.type] ||
+                    reservation.surfboard.type}
                 </Badge>
                 <span className="flex items-center gap-1 text-xs text-muted-foreground">
                   <Ruler className="h-3 w-3" />
@@ -166,27 +189,37 @@ export function ReservationDetailModal({
                   {reservation.surfboard.volumeLiters}L
                 </span>
               </div>
+
+              <Button
+                asChild
+                variant="ghost"
+                size="sm"
+                className="mt-2 -ml-2 h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
+              >
+                <Link
+                  href={`/boards/${reservation.surfboard.id}`}
+                  onClick={onClose}
+                >
+                  <ExternalLink className="h-3 w-3 mr-1" />
+                  Ver prancha
+                </Link>
+              </Button>
             </div>
-            <Button asChild variant="ghost" size="icon" className="shrink-0 text-muted-foreground">
-              <Link href={`/boards/${reservation.surfboard.id}`} onClick={onClose}>
-                <ExternalLink className="h-4 w-4" />
-              </Link>
-            </Button>
           </div>
 
-          <Separator />
-
-          {/* Dates */}
-          <div className="space-y-2">
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Período</p>
-            <div className="flex items-center gap-2 text-sm">
-              <CalendarDays className="h-4 w-4 text-primary shrink-0" />
-              <span className="font-medium">
+          {/* ── Dates ── */}
+          <div className="rounded-xl bg-secondary/60 border border-border/60 p-4 space-y-2">
+            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Período
+            </p>
+            <div className="flex items-center gap-2">
+              <CalendarDays className="h-4 w-4 text-primary-light shrink-0" />
+              <span className="text-sm font-semibold">
                 {format(startDate, "dd 'de' MMMM", { locale: ptBR })}
               </span>
-              <span className="text-muted-foreground">→</span>
-              <span className="font-medium">
-                {format(endDate, "dd 'de' MMMM 'de' yyyy", { locale: ptBR })}
+              <ArrowRight className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+              <span className="text-sm font-semibold">
+                {format(endDate, "dd 'de' MMMM", { locale: ptBR })}
               </span>
             </div>
             <p className="text-xs text-muted-foreground pl-6">
@@ -194,67 +227,80 @@ export function ReservationDetailModal({
             </p>
           </div>
 
-          <Separator />
-
-          {/* Location */}
-          <div className="space-y-2">
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Local</p>
-            <div className="flex items-start gap-2 text-sm">
-              <MapPin className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+          {/* ── Location + Instructions ── */}
+          <div className="rounded-xl bg-secondary/60 border border-border/60 p-4 space-y-3">
+            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Local
+            </p>
+            <div className="flex items-start gap-2">
+              <MapPin className="h-4 w-4 text-primary-light shrink-0 mt-0.5" />
               <div>
-                <p className="font-medium">{reservation.pickupLocation.town}, {reservation.pickupLocation.city}</p>
-                <p className="text-xs text-muted-foreground">{reservation.pickupLocation.address}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Pickup instructions */}
-          {reservation.status !== "CANCELLED" && (
-            <div className="space-y-3">
-              <div className="rounded-lg bg-primary/5 border border-primary/20 p-3 space-y-1">
-                <p className="text-xs font-semibold text-primary">Retirada</p>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {reservation.pickupLocation.pickupInstructions}
+                <p className="text-sm font-semibold">
+                  {reservation.pickupLocation.town},{" "}
+                  {reservation.pickupLocation.city}
                 </p>
-              </div>
-              <div className="rounded-lg bg-secondary/50 border border-border p-3 space-y-1">
-                <p className="text-xs font-semibold">Devolução</p>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {reservation.pickupLocation.returnInstructions}
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  {reservation.pickupLocation.address}
                 </p>
               </div>
             </div>
-          )}
 
-          <Separator />
-
-          {/* Footer info */}
-          <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <span>ID: <span className="font-mono">{reservation.id.slice(0, 8)}…</span></span>
-            <span>Criada em {format(new Date(reservation.createdAt), "dd/MM/yyyy", { locale: ptBR })}</span>
+            {reservation.status !== "CANCELLED" && (
+              <div className="grid gap-2 pt-1">
+                {/* Pickup */}
+                <div className="rounded-lg bg-background/60 border border-border p-3 space-y-1">
+                  <p className="text-xs font-semibold text-foreground">
+                    Retirada
+                  </p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {reservation.pickupLocation.pickupInstructions}
+                  </p>
+                </div>
+                {/* Return */}
+                <div className="rounded-lg bg-background/60 border border-border p-3 space-y-1">
+                  <p className="text-xs font-semibold text-foreground">
+                    Devolução
+                  </p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {reservation.pickupLocation.returnInstructions}
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* Cancel section */}
+          {/* ── Footer meta ── */}
+          <p className="text-[11px] text-muted-foreground/60 text-right">
+            <span className="font-mono">{reservation.id.slice(0, 10)}…</span>
+            {" · "}
+            {format(new Date(reservation.createdAt), "dd/MM/yyyy", {
+              locale: ptBR,
+            })}
+          </p>
+
+          {/* ── Cancel section ── */}
           {canCancel && (
             <>
-              <Separator />
               {!showConfirm ? (
                 <Button
                   variant="outline"
-                  className="w-full border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive"
+                  className="w-full border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive hover:border-destructive/50"
                   onClick={() => setShowConfirm(true)}
                 >
-                  <X className="h-4 w-4 mr-2" />
+                  <Trash2 className="h-4 w-4 mr-2" />
                   Cancelar reserva
                 </Button>
               ) : (
-                <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 space-y-3">
-                  <div className="flex items-start gap-2">
+                <div className="rounded-xl border border-destructive/30 bg-destructive/5 p-4 space-y-3">
+                  <div className="flex items-start gap-2.5">
                     <AlertTriangle className="h-4 w-4 text-destructive shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-sm font-semibold text-destructive">Confirmar cancelamento</p>
+                      <p className="text-sm font-semibold text-destructive">
+                        Confirmar cancelamento
+                      </p>
                       <p className="text-xs text-muted-foreground mt-0.5">
-                        Essa ação não pode ser desfeita. A prancha voltará a ficar disponível.
+                        Essa ação não pode ser desfeita. A prancha voltará a
+                        ficar disponível.
                       </p>
                     </div>
                   </div>
@@ -274,7 +320,7 @@ export function ReservationDetailModal({
                       onClick={handleCancel}
                       disabled={cancelling}
                     >
-                      {cancelling ? "Cancelando..." : "Sim, cancelar"}
+                      {cancelling ? "Cancelando…" : "Sim, cancelar"}
                     </Button>
                   </div>
                 </div>

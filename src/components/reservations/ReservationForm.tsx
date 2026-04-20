@@ -167,7 +167,7 @@ export function ReservationForm({
               <li>Devolverá a prancha na data e local acordados, nas mesmas condições em que a recebeu.</li>
               <li>Utilizará a prancha apenas para o surf recreativo, em condições compatíveis com seu nível de habilidade.</li>
               <li>Não cederá, emprestará ou sublocará a prancha a terceiros.</li>
-              <li>Em caso de danos, arcará com os custos de reparo conforme avaliação da EasySurf.</li>
+              <li>Em caso de danos, arcará com os custos de reparo conforme avaliação da WavyClub.</li>
               <li>Em caso de perda ou roubo, arcará com o valor de reposição da prancha.</li>
             </ul>
           </div>

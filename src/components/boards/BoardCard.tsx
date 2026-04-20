@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const BOARD_TYPE_LABELS: Record<string, string> = {
   SHORTBOARD: "Shortboard",
@@ -36,7 +36,15 @@ export function BoardCard({ board }: BoardCardProps) {
 
   return (
     <Link href={`/boards/${board.id}`} className="group block">
-      <Card className="h-full overflow-hidden border-border/50 py-0 gap-0 transition-all duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 flex flex-col">
+      <div
+        className={cn(
+          "relative rounded-2xl border-2 border-border bg-card overflow-hidden flex flex-col",
+          "[box-shadow:4px_4px_0px_0px_var(--color-border)]",
+          "transition-all duration-300",
+          "group-hover:-translate-x-1 group-hover:-translate-y-1",
+          "group-hover:[box-shadow:8px_8px_0px_0px_var(--color-border)]",
+        )}
+      >
         {/* Flip container */}
         <div
           className="relative aspect-[3/4] bg-secondary"
@@ -91,18 +99,19 @@ export function BoardCard({ board }: BoardCardProps) {
             )}
           </div>
 
-          {/* Hover button overlay (sits above the flip) */}
+          {/* Hover button overlay */}
           <div className="pointer-events-none absolute inset-0 z-10 flex items-end justify-center pb-4 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
             <Button
               size="sm"
-              className="pointer-events-none font-semibold tracking-wide shadow-lg"
+              className="pointer-events-none text-base font-semibold rounded-full normal-case shadow-lg"
             >
-              VER PRANCHA
+              Ver prancha
             </Button>
           </div>
         </div>
 
-        <CardContent className="flex flex-1 flex-col p-4 gap-2">
+        {/* Card content */}
+        <div className="flex flex-1 flex-col p-4 gap-2">
           <p className="font-semibold leading-tight truncate">{board.name}</p>
           <p className="text-xs text-muted-foreground tracking-tight">
             {board.size}&nbsp;&nbsp;|&nbsp;&nbsp;{board.volumeLiters}L&nbsp;&nbsp;|&nbsp;&nbsp;{BOARD_TYPE_LABELS[board.type] ?? board.type}
@@ -111,8 +120,8 @@ export function BoardCard({ board }: BoardCardProps) {
             <MapPin className="h-3 w-3 shrink-0" />
             <span className="truncate">{board.location.town}, {board.location.city}</span>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </Link>
   );
 }

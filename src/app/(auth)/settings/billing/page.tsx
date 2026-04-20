@@ -44,7 +44,7 @@ export default function BillingPage() {
     <div className="max-w-2xl space-y-6">
       <div>
         <h1 className="text-2xl font-bold">Faturamento</h1>
-        <p className="text-muted-foreground mt-1">Gerencie sua assinatura EasySurf.</p>
+        <p className="text-muted-foreground mt-1">Gerencie sua assinatura WavyClub.</p>
       </div>
 
       {/* Current plan */}
@@ -131,7 +131,7 @@ export default function BillingPage() {
       <div className="flex items-start gap-2 rounded-lg border border-border bg-card p-3 text-xs text-muted-foreground">
         <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
         <p>
-          Os pagamentos são processados com segurança pelo Stripe. O EasySurf não armazena dados do seu cartão.
+          Os pagamentos são processados com segurança pelo Stripe. O WavyClub não armazena dados do seu cartão.
           Ao cancelar, você mantém acesso até o fim do período pago.
         </p>
       </div>

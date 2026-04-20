@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "motion/react";
 import { TestimonialsColumn } from "@/components/ui/testimonials-columns-1";
-import { Badge } from "@/components/ui/badge";
 
 const testimonials = [
   {
@@ -75,10 +74,10 @@ export function TestimonialsSection() {
           viewport={{ once: true }}
           className="flex flex-col items-center text-center max-w-[540px] mx-auto mb-12"
         >
-          <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">
+          <p className="text-sm font-bold uppercase tracking-widest text-primary-light">
             Depoimentos
-          </Badge>
-          <h2 className="text-3xl font-bold tracking-tight">
+          </p>
+          <h2 className="text-4xl font-extrabold sm:text-5xl">
             Quem surfa, aprova
           </h2>
           <p className="mt-3 text-muted-foreground">

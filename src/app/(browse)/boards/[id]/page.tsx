@@ -156,26 +156,24 @@ export default async function BoardDetailPage({
             hasAccess={userHasAccess}
             isLoggedIn={isLoggedIn}
           />
-        </div>
-      </div>
 
-      {/* ── Location ── */}
-      <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
-        <h3 className="font-semibold flex items-center gap-2">
-          <MapPin className="h-4 w-4 text-primary" />
-          Local de Retirada
-        </h3>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1.5">Endereço</p>
-            <p className="font-medium text-sm">{board.location.town}, {board.location.city}</p>
-            <p className="text-xs text-muted-foreground mt-0.5">{board.location.address}</p>
-          </div>
-          <div className="rounded-lg bg-primary/5 border border-primary/20 p-3">
-            <p className="text-xs font-semibold text-primary mb-1">Instruções de retirada</p>
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              {board.location.pickupInstructions}
-            </p>
+          {/* ── Location ── */}
+          <div className="rounded-2xl border border-border bg-card p-4 space-y-3">
+            <h3 className="text-sm font-semibold flex items-center gap-2">
+              <MapPin className="h-3.5 w-3.5 text-primary" />
+              Local de Retirada
+            </h3>
+            <div>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">Endereço</p>
+              <p className="font-medium text-sm">{board.location.town}, {board.location.city}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">{board.location.address}</p>
+            </div>
+            <div className="rounded-lg bg-secondary border border-border p-3">
+              <p className="text-xs font-semibold mb-1">Instruções de retirada</p>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                {board.location.pickupInstructions}
+              </p>
+            </div>
           </div>
         </div>
       </div>

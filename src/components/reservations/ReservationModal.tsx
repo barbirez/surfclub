@@ -291,6 +291,10 @@ export function ReservationModal({
                     locale={ptBR}
                     disabled={disabledDays}
                     numberOfMonths={1}
+                    style={{
+                      "--rdp-accent-color": "#3366FF",
+                      "--rdp-accent-background-color": "rgba(79, 137, 255, 0.18)",
+                    } as React.CSSProperties}
                   />
                 </div>
 

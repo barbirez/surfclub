@@ -117,7 +117,7 @@ export default async function DashboardPage() {
               <div>
                 <p className="font-semibold">Desbloqueie as reservas</p>
                 <p className="text-sm text-muted-foreground">
-                  Assine o EasySurf e comece a reservar pranchas para as condições de hoje.
+                  Assine o WavyClub e comece a reservar pranchas para as condições de hoje.
                 </p>
               </div>
             </div>

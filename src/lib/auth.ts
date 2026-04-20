@@ -13,7 +13,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
     Resend({
       apiKey: process.env.AUTH_RESEND_KEY,
-      from: "EasySurf <noreply@easysurf.app>",
+      from: "WavyClub <noreply@wavyclub.com>",
     }),
   ],
   pages: {

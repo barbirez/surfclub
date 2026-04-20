@@ -12,7 +12,7 @@ export function BoardDetailImage({ frontImage, backImage, name }: BoardDetailIma
   return (
     <div className="flex justify-center">
       <div
-        className="group relative w-full max-w-[450px] aspect-[3/4] rounded-2xl bg-secondary"
+        className="group relative w-full max-w-[450px] aspect-[3/4] rounded-2xl bg-secondary border-2 border-border [box-shadow:6px_6px_0px_0px_var(--color-border)]"
         style={{ perspective: "1100px" }}
       >
         <style>{`

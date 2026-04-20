@@ -1,7 +1,9 @@
 export type DesignTokens = {
   colors: {
     primary: string;
+    primaryLight: string;
     primaryForeground: string;
+    surfaceCream: string;
     background: string;
     foreground: string;
     card: string;
@@ -59,7 +61,9 @@ export type DesignTokens = {
 export const tokens: DesignTokens = {
   colors: {
     primary: "#3366FF",
+    primaryLight: "#4F89FF",
     primaryForeground: "#FFFFFF",
+    surfaceCream: "#FAF8F5",
     background: "#1A1D29",
     foreground: "#F0F2FF",
     card: "#22263A",

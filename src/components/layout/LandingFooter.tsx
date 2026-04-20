@@ -1,42 +1,62 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
-import { useSmoothScroll } from "@/hooks/useSmoothScroll";
+import { motion } from "motion/react";
+import { Camera, MessageCircle, CirclePlay } from "lucide-react";
+import { Footer } from "@/components/ui/footer";
 
 export function LandingFooter() {
-  const { scrollTo } = useSmoothScroll();
-
   return (
-    <footer className="border-t border-border/50 py-8">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/surfpack-logo.svg"
-              alt="Surf Pack"
-              width={100}
-              height={28}
-              className="w-[100px] h-auto dark:invert"
-            />
-          </Link>
-          <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} EasySurf. Feito com 🏄 para surfistas.
-          </p>
-          <div className="flex items-center gap-4 text-xs text-muted-foreground">
-            <a
-              href="#pricing"
-              onClick={(e) => { e.preventDefault(); scrollTo("pricing"); }}
-              className="hover:text-foreground transition-colors cursor-pointer"
-            >
-              Preços
-            </a>
-            <Link href="/login" className="hover:text-foreground transition-colors">
-              Entrar
-            </Link>
-          </div>
-        </div>
-      </div>
-    </footer>
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className="border-t border-border/50"
+    >
+      <Footer
+        logo={
+          <Image
+            src="/logo-wavyclub.svg"
+            alt="WavyClub"
+            width={130}
+            height={30}
+            className="w-[130px] h-auto"
+          />
+        }
+        brandName="WavyClub"
+        socialLinks={[
+          {
+            icon: <Camera className="h-4 w-4" />,
+            href: "https://instagram.com/wavyclub",
+            label: "Instagram",
+          },
+          {
+            icon: <MessageCircle className="h-4 w-4" />,
+            href: "https://twitter.com/wavyclub",
+            label: "Twitter",
+          },
+          {
+            icon: <CirclePlay className="h-4 w-4" />,
+            href: "https://youtube.com/@wavyclub",
+            label: "YouTube",
+          },
+        ]}
+        mainLinks={[
+          { href: "/boards", label: "Pranchas" },
+          { href: "#how-it-works", label: "Como funciona" },
+          { href: "#pricing", label: "Planos" },
+          { href: "/login", label: "Entrar" },
+        ]}
+        legalLinks={[
+          { href: "/privacy", label: "Privacidade" },
+          { href: "/terms", label: "Termos de uso" },
+        ]}
+        copyright={{
+          text: `© ${new Date().getFullYear()} WavyClub`,
+          license: "Feito de surfistas para surfistas.",
+        }}
+      />
+    </motion.div>
   );
 }

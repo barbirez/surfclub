@@ -21,7 +21,7 @@ export async function sendReservationConfirmation({
 }) {
   const resend = getResend();
   await resend.emails.send({
-    from: "EasySurf <noreply@easysurf.app>",
+    from: "WavyClub <noreply@wavyclub.com>",
     to,
     subject: `Reserva confirmada — ${boardName}`,
     html: `
@@ -34,7 +34,7 @@ export async function sendReservationConfirmation({
       <h3>Instruções de Retirada</h3>
       <p>${pickupInstructions}</p>
       <p>Boas ondas! 🏄</p>
-      <p>— Equipe EasySurf</p>
+      <p>— Equipe WavyClub</p>
     `,
   });
 }
