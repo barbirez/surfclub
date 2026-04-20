@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
+import { useT } from "@/lib/i18n/client";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function CTASection() {
+  const { t } = useT();
   return (
     <section className="relative py-24 overflow-hidden">
       {/* Subtle glow background */}
@@ -23,13 +25,13 @@ export function CTASection() {
           className="space-y-4"
         >
           <p className="text-sm font-bold uppercase tracking-widest text-primary-light">
-            Próxima sessão
+            {t.cta.label}
           </p>
           <h2 className="text-4xl font-extrabold sm:text-5xl lg:text-6xl leading-tight">
-            Pronto para pegar<br className="hidden sm:block" /> a próxima onda?
+            {t.cta.headingPart1}<br className="hidden sm:block" /> {t.cta.headingPart2}
           </h2>
           <p className="text-muted-foreground text-lg max-w-lg mx-auto">
-            Escolha sua prancha, reserve em minutos e vá surfar. Sem complicação.
+            {t.cta.subheading}
           </p>
         </motion.div>
 
@@ -46,7 +48,7 @@ export function CTASection() {
             className="h-12 px-8 text-base font-semibold rounded-full shadow-lg"
           >
             <Link href="/boards">
-              Começar Agora
+              {t.cta.button}
             </Link>
           </Button>
         </motion.div>

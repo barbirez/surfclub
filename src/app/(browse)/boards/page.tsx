@@ -5,6 +5,7 @@ import { BoardCard } from "@/components/boards/BoardCard";
 import { BoardFilters } from "@/components/boards/BoardFilters";
 import { getFilterOptions } from "./actions";
 import type { SurfboardType } from "@prisma/client";
+import { getT } from "@/lib/i18n/server";
 
 const VALID_TYPES = new Set(["SHORTBOARD", "LONGBOARD", "FISH", "FUNBOARD", "GUN", "SUP", "FOIL"]);
 
@@ -25,6 +26,7 @@ interface PageProps {
 export default async function BoardsPage({ searchParams }: PageProps) {
   const params = await searchParams;
   const { type, minVolume, maxVolume, minSize, maxSize, shaper, city, spot, q } = params;
+  const { t } = await getT();
 
   // Build search conditions safely
   const searchConditions: Prisma.SurfboardWhereInput[] = [];
@@ -91,9 +93,9 @@ export default async function BoardsPage({ searchParams }: PageProps) {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Pranchas Disponíveis</h1>
+        <h1 className="text-2xl font-bold">{t.boardsList.title}</h1>
         <p className="text-muted-foreground mt-1">
-          {boards.length} prancha{boards.length !== 1 ? "s" : ""} disponível{boards.length !== 1 ? "is" : ""}
+          {t.boardsList.count(boards.length)}
         </p>
       </div>
 
@@ -108,9 +110,9 @@ export default async function BoardsPage({ searchParams }: PageProps) {
           {boards.length === 0 ? (
             <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border py-16 text-center">
               <div className="text-5xl mb-4">🏄</div>
-              <p className="font-semibold text-lg">Nenhuma prancha encontrada</p>
+              <p className="font-semibold text-lg">{t.boardsList.emptyTitle}</p>
               <p className="text-muted-foreground text-sm mt-1">
-                Tente remover alguns filtros para ver mais opções.
+                {t.boardsList.emptyText}
               </p>
             </div>
           ) : (

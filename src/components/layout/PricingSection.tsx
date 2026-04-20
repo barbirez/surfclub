@@ -6,59 +6,15 @@ import { Button } from "@/components/ui/button";
 import { Check, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { useT } from "@/lib/i18n/client";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-const PLANS = [
-  {
-    id: "monthly",
-    name: "Go Surf",
-    emoji: "🏄",
-    tagline: "Mensal",
-    price: 289,
-    caption: "Renovação mensal",
-    highlight: false,
-    features: [
-      "Acesso ilimitado por 30 dias",
-      "Mesma prancha até 5 dias seguidos",
-      "Proteção contra danos",
-      "Clube de Vantagens",
-      "Renovação automática",
-    ],
-  },
-  {
-    id: "quarterly",
-    name: "Surf's Up",
-    emoji: "🌊",
-    tagline: "Trimestral",
-    price: 199,
-    caption: "Total: R$ 597,00",
-    highlight: true,
-    features: [
-      "Acesso ilimitado por 90 dias",
-      "Mesma prancha até 10 dias seguidos",
-      "Proteção contra danos",
-      "Clube de Vantagens",
-      "Renovação automática",
-    ],
-  },
-  {
-    id: "annual",
-    name: "Wave Life",
-    emoji: "⚡",
-    tagline: "Anual",
-    price: 149,
-    caption: "Total: R$ 1.788,00",
-    highlight: false,
-    features: [
-      "Acesso ilimitado por 365 dias",
-      "Mesma prancha até 15 dias seguidos",
-      "Proteção contra danos",
-      "Clube de Vantagens",
-      "Renovação automática",
-    ],
-  },
-];
+const PLAN_META = [
+  { id: "monthly", emoji: "🏄", price: 289, highlight: false },
+  { id: "quarterly", emoji: "🌊", price: 199, highlight: true },
+  { id: "annual", emoji: "⚡", price: 149, highlight: false },
+] as const;
 
 const AVULSO_BASE = 80;
 const AVULSO_PER_DAY = 3.7;
@@ -72,6 +28,18 @@ export function PricingSection() {
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
   const [days, setDays] = useState(1);
   const totalAvulso = avulsoPrice(days);
+  const { t } = useT();
+
+  const plans = PLAN_META.map((meta) => {
+    const copy = t.pricing.plans[meta.id as keyof typeof t.pricing.plans];
+    return {
+      ...meta,
+      name: copy.name,
+      tagline: copy.tagline,
+      caption: copy.caption,
+      features: copy.features,
+    };
+  });
 
   async function handleCheckout(planId: string) {
     setLoadingPlan(planId);
@@ -82,7 +50,7 @@ export function PricingSection() {
       if (error) throw new Error(error);
       window.location.href = url;
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Erro ao iniciar pagamento.");
+      toast.error(err instanceof Error ? err.message : t.pricing.checkoutError);
       setLoadingPlan(null);
     }
   }
@@ -101,22 +69,22 @@ export function PricingSection() {
           transition={{ duration: 0.7, ease: EASE }}
         >
           <p className="text-sm font-bold uppercase tracking-widest text-primary-light">
-            Preço simples
+            {t.pricing.label}
           </p>
           <div className="relative inline-block">
             <h2 className="text-4xl font-extrabold sm:text-5xl">
-              Escolha seu plano 🤙
+              {t.pricing.heading}
             </h2>
             <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-48 h-2 bg-primary/20 rounded-full blur-sm" />
           </div>
           <p className="text-muted-foreground max-w-md mx-auto pt-4">
-            Assine e surfe sem limites. Quanto mais você compromete, mais você economiza.
+            {t.pricing.subheading}
           </p>
         </motion.div>
 
         {/* ── 3 plans ── */}
         <div className="grid gap-8 sm:grid-cols-3 items-start pt-2">
-          {PLANS.map((plan, i) => (
+          {plans.map((plan, i) => (
             <motion.div
               key={plan.id}
               initial={{ opacity: 0, y: 36 }}
@@ -142,7 +110,7 @@ export function PricingSection() {
               >
                 {plan.highlight && (
                   <div className="absolute -top-3 -right-3 z-10 bg-accent text-accent-foreground font-extrabold text-xs px-3 py-1 rounded-full rotate-12 border-2 border-accent/80 shadow-sm">
-                    Popular! 🔥
+                    {t.pricing.popular}
                   </div>
                 )}
 
@@ -168,7 +136,7 @@ export function PricingSection() {
                 <div>
                   <div className="flex items-baseline gap-1">
                     <span className="text-4xl font-black tabular-nums">R$ {plan.price}</span>
-                    <span className="text-muted-foreground text-sm">/mês</span>
+                    <span className="text-muted-foreground text-sm">{t.pricing.perMonth}</span>
                   </div>
                   <p className="text-xs text-muted-foreground mt-0.5">{plan.caption}</p>
                 </div>
@@ -205,7 +173,7 @@ export function PricingSection() {
                   onClick={() => handleCheckout(plan.id)}
                   disabled={loadingPlan === plan.id}
                 >
-                  {loadingPlan === plan.id ? "Aguarde..." : "Assinar agora"}
+                  {loadingPlan === plan.id ? t.pricing.loading : t.pricing.subscribeCta}
                 </Button>
               </div>
             </motion.div>
@@ -222,11 +190,11 @@ export function PricingSection() {
         >
           <div className="text-center space-y-2">
             <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
-              Sem compromisso
+              {t.pricing.avulso.label}
             </p>
-            <h3 className="text-3xl font-extrabold">Compre por dias 📅</h3>
+            <h3 className="text-3xl font-extrabold">{t.pricing.avulso.heading}</h3>
             <p className="text-muted-foreground text-sm max-w-sm mx-auto">
-              Surfe quando quiser, sem assinatura. Escolha os dias e pague só por isso.
+              {t.pricing.avulso.subheading}
             </p>
           </div>
 
@@ -240,9 +208,9 @@ export function PricingSection() {
               {/* Slider */}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-muted-foreground">Dias de uso</span>
+                  <span className="text-sm font-medium text-muted-foreground">{t.pricing.avulso.daysOfUse}</span>
                   <span className="text-3xl font-black tabular-nums">
-                    {days} dia{days !== 1 ? "s" : ""}
+                    {days === 1 ? t.pricing.avulso.dayOne : t.pricing.avulso.dayMany(days)}
                   </span>
                 </div>
                 <input
@@ -258,21 +226,21 @@ export function PricingSection() {
                   }}
                 />
                 <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>1 dia</span>
-                  <span>{AVULSO_MAX_DAYS} dias</span>
+                  <span>{t.pricing.avulso.dayOne}</span>
+                  <span>{t.pricing.avulso.dayMany(AVULSO_MAX_DAYS)}</span>
                 </div>
               </div>
 
               {/* Price display */}
               <div className="rounded-xl border-2 border-border bg-secondary p-5 text-center space-y-1">
-                <p className="text-sm font-medium text-muted-foreground">Total a pagar</p>
+                <p className="text-sm font-medium text-muted-foreground">{t.pricing.avulso.totalToPay}</p>
                 <p className="text-5xl font-black tabular-nums">
-                  R$ {totalAvulso.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  R$ {totalAvulso.toLocaleString(t.pricing.avulso.priceLocale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </p>
                 <p className="text-xs text-muted-foreground">
                   {days === 1
-                    ? "R$ 80,00 para o primeiro dia"
-                    : `R$ 80,00 + ${days - 1} dia${days - 1 !== 1 ? "s" : ""} × R$ 3,70`}
+                    ? t.pricing.avulso.firstDayNote
+                    : t.pricing.avulso.breakdown(days - 1)}
                 </p>
               </div>
 
@@ -289,12 +257,12 @@ export function PricingSection() {
               >
                 <Zap className="h-4 w-4 mr-2" />
                 {loadingPlan === "avulso"
-                  ? "Aguarde..."
-                  : `Comprar ${days} dia${days !== 1 ? "s" : ""} — R$ ${totalAvulso.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}`}
+                  ? t.pricing.loading
+                  : t.pricing.avulso.buy(days, totalAvulso.toLocaleString(t.pricing.avulso.priceLocale, { minimumFractionDigits: 2 }))}
               </Button>
 
               <p className="text-center text-xs text-muted-foreground">
-                Pagamento único · Sem renovação automática · Sem fidelidade
+                {t.pricing.avulso.footer}
               </p>
             </div>
           </div>

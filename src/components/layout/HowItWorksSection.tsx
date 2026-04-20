@@ -3,33 +3,7 @@
 import { SlidersHorizontal, CalendarDays, MapPin, Waves } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
-
-const STEPS = [
-  {
-    step: "01",
-    icon: <SlidersHorizontal className="w-5 h-5" />,
-    title: "Escolha a prancha",
-    description: "Filtre por tipo, tamanho, volume e condições ideais.",
-  },
-  {
-    step: "02",
-    icon: <CalendarDays className="w-5 h-5" />,
-    title: "Selecione as datas",
-    description: "Veja a disponibilidade em tempo real e reserve com um clique.",
-  },
-  {
-    step: "03",
-    icon: <MapPin className="w-5 h-5" />,
-    title: "Confirme e busque",
-    description: "Receba as instruções de retirada por e-mail e vá pegar sua prancha.",
-  },
-  {
-    step: "04",
-    icon: <Waves className="w-5 h-5" />,
-    title: "Surfe e devolva",
-    description: "Aproveite as ondas e devolva no ponto combinado no prazo.",
-  },
-];
+import { useT } from "@/lib/i18n/client";
 
 const ROTATIONS = [
   "sm:rotate-[-1.5deg]",
@@ -41,6 +15,33 @@ const ROTATIONS = [
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function HowItWorksSection() {
+  const { t } = useT();
+  const steps = [
+    {
+      step: "01",
+      icon: <SlidersHorizontal className="w-5 h-5" />,
+      title: t.howItWorks.steps.one.title,
+      description: t.howItWorks.steps.one.description,
+    },
+    {
+      step: "02",
+      icon: <CalendarDays className="w-5 h-5" />,
+      title: t.howItWorks.steps.two.title,
+      description: t.howItWorks.steps.two.description,
+    },
+    {
+      step: "03",
+      icon: <MapPin className="w-5 h-5" />,
+      title: t.howItWorks.steps.three.title,
+      description: t.howItWorks.steps.three.description,
+    },
+    {
+      step: "04",
+      icon: <Waves className="w-5 h-5" />,
+      title: t.howItWorks.steps.four.title,
+      description: t.howItWorks.steps.four.description,
+    },
+  ];
   return (
     <section id="how-it-works" className="bg-card/30 border-y border-border/50 py-24">
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
@@ -54,16 +55,16 @@ export function HowItWorksSection() {
           transition={{ duration: 0.7, ease: EASE }}
         >
           <p className="text-sm font-bold uppercase tracking-widest text-primary-light">
-            Como funciona
+            {t.howItWorks.label}
           </p>
           <h2 className="text-4xl font-extrabold sm:text-5xl">
-            Do sofá à praia em 4 passos
+            {t.howItWorks.heading}
           </h2>
         </motion.div>
 
         {/* Cards — staggered */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 items-start">
-          {STEPS.map((s, i) => (
+          {steps.map((s, i) => (
             <motion.div
               key={s.step}
               className={cn("group relative transition-all duration-300", ROTATIONS[i])}

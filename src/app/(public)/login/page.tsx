@@ -10,11 +10,14 @@ import { Separator } from "@/components/ui/separator";
 import { Mail } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
+import { useT } from "@/lib/i18n/client";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const { t } = useT();
 
   async function handleEmailLogin(e: React.FormEvent) {
     e.preventDefault();
@@ -24,14 +27,17 @@ export default function LoginPage() {
       if (result?.error) throw new Error(result.error);
       setSent(true);
     } catch {
-      toast.error("Erro ao enviar o link. Tente novamente.");
+      toast.error(t.login.errorSending);
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 relative">
+      <div className="absolute top-4 right-4">
+        <LanguageSwitcher />
+      </div>
       <div className="w-full max-w-sm space-y-6">
         {/* Logo */}
         <div className="flex flex-col items-center gap-3">
@@ -43,15 +49,15 @@ export default function LoginPage() {
             className="w-[160px] h-auto"
           />
           <p className="text-sm text-muted-foreground text-center">
-            Alugue a prancha certa para as condições de hoje
+            {t.login.tagline}
           </p>
         </div>
 
         <Card className="border-border">
           <CardHeader className="text-center pb-4">
-            <CardTitle className="text-lg">Entrar na sua conta</CardTitle>
+            <CardTitle className="text-lg">{t.login.cardTitle}</CardTitle>
             <CardDescription>
-              Use o Google ou receba um link mágico por e-mail.
+              {t.login.cardDescription}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -67,7 +73,7 @@ export default function LoginPage() {
                 <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
               </svg>
-              Continuar com Google
+              {t.login.continueWithGoogle}
             </Button>
 
             <div className="relative">
@@ -75,7 +81,7 @@ export default function LoginPage() {
                 <Separator />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-card px-2 text-muted-foreground">ou</span>
+                <span className="bg-card px-2 text-muted-foreground">{t.login.or}</span>
               </div>
             </div>
 
@@ -83,26 +89,26 @@ export default function LoginPage() {
             {sent ? (
               <div className="rounded-lg border border-primary/30 bg-primary/5 p-4 text-center">
                 <Mail className="mx-auto h-8 w-8 text-primary mb-2" />
-                <p className="font-medium text-sm">Verifique seu e-mail</p>
+                <p className="font-medium text-sm">{t.login.checkEmailTitle}</p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Enviamos um link de acesso para <strong>{email}</strong>.
+                  {t.login.checkEmailText(email)}
                 </p>
               </div>
             ) : (
               <form onSubmit={handleEmailLogin} className="space-y-3">
                 <div className="space-y-1.5">
-                  <Label htmlFor="email">E-mail</Label>
+                  <Label htmlFor="email">{t.login.emailLabel}</Label>
                   <Input
                     id="email"
                     type="email"
-                    placeholder="seu@email.com"
+                    placeholder={t.login.emailPlaceholder}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? "Enviando..." : "Enviar link de acesso"}
+                  {loading ? t.login.sending : t.login.sendLink}
                 </Button>
               </form>
             )}
@@ -110,13 +116,13 @@ export default function LoginPage() {
         </Card>
 
         <p className="text-center text-xs text-muted-foreground">
-          Ao entrar, você concorda com nossos{" "}
+          {t.login.legalPrefix}{" "}
           <a href="#" className="underline hover:text-foreground">
-            Termos de Uso
+            {t.login.termsOfUse}
           </a>{" "}
-          e{" "}
+          {t.login.legalMid}{" "}
           <a href="#" className="underline hover:text-foreground">
-            Política de Privacidade
+            {t.login.privacyPolicy}
           </a>.
         </p>
       </div>

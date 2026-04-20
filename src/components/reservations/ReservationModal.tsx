@@ -17,13 +17,14 @@ import {
   MapPin,
 } from "lucide-react";
 import { DayPicker } from "react-day-picker";
-import { ptBR } from "date-fns/locale";
+import { ptBR, enUS } from "date-fns/locale";
 import { format, addDays, startOfDay } from "date-fns";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import type { DateRange } from "react-day-picker";
 import "react-day-picker/style.css";
 import confetti from "canvas-confetti";
+import { useT } from "@/lib/i18n/client";
 
 interface ReservationModalProps {
   surfboardId: string;
@@ -49,6 +50,8 @@ export function ReservationModal({
   isLoggedIn = true,
 }: ReservationModalProps) {
   const router = useRouter();
+  const { t, locale } = useT();
+  const dateLocale = locale === "pt" ? ptBR : enUS;
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState<"calendar" | "confirm" | "success">("calendar");
   const [range, setRange] = useState<DateRange | undefined>();
@@ -154,11 +157,11 @@ export function ReservationModal({
       });
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || "Erro ao criar reserva.");
+        throw new Error(data.error || t.reservationModal.errorCreating);
       }
       setStep("success");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Erro ao criar reserva.");
+      toast.error(err instanceof Error ? err.message : t.reservationModal.errorCreating);
     } finally {
       setLoading(false);
     }
@@ -175,7 +178,7 @@ export function ReservationModal({
         }
       >
         <Waves className="h-4 w-4 mr-2" />
-        Quero essa prancha
+        {t.reservationModal.wantThisBoard}
       </Button>
     );
   }
@@ -187,7 +190,7 @@ export function ReservationModal({
         onClick={() => router.push("/#pricing")}
       >
         <Lock className="h-4 w-4 mr-2" />
-        Ver planos para reservar
+        {t.reservationModal.seePlans}
       </Button>
     );
   }
@@ -196,7 +199,7 @@ export function ReservationModal({
     <>
       <Button className="w-full h-11 font-semibold text-base" onClick={handleOpen}>
         <Waves className="h-4 w-4 mr-2" />
-        Quero essa prancha
+        {t.reservationModal.wantThisBoard}
       </Button>
 
       <Dialog
@@ -236,9 +239,9 @@ export function ReservationModal({
               </div>
 
               <div>
-                <p className="text-2xl font-extrabold tracking-tight">Vai nas ondas!</p>
+                <p className="text-2xl font-extrabold tracking-tight">{t.reservationModal.successTitle}</p>
                 <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">
-                  Reserva confirmada. Você vai receber<br />um e-mail com os detalhes de retirada.
+                  {t.reservationModal.successText}
                 </p>
               </div>
 
@@ -246,11 +249,11 @@ export function ReservationModal({
                 <div className="rounded-xl border border-border bg-card/60 px-4 py-3 text-sm text-left space-y-1.5">
                   <p className="font-semibold">{boardName}</p>
                   <p className="text-muted-foreground text-xs">
-                    {format(range.from, "dd 'de' MMMM", { locale: ptBR })}
+                    {format(range.from, "dd 'de' MMMM", { locale: dateLocale })}
                     {" → "}
-                    {format(range.to, "dd 'de' MMMM", { locale: ptBR })}
+                    {format(range.to, "dd 'de' MMMM", { locale: dateLocale })}
                     {" · "}
-                    {nights} dia{nights !== 1 ? "s" : ""}
+                    {t.reservationModal.nights(nights)}
                   </p>
                 </div>
               )}
@@ -258,7 +261,7 @@ export function ReservationModal({
               <div className="flex gap-2.5 rounded-xl bg-primary/5 border border-primary/20 px-4 py-3 text-xs text-muted-foreground text-left">
                 <MapPin className="h-3.5 w-3.5 shrink-0 mt-0.5 text-primary" />
                 <div>
-                  <p className="font-semibold text-primary mb-0.5">Instruções de retirada</p>
+                  <p className="font-semibold text-primary mb-0.5">{t.reservationModal.successPickupLabel}</p>
                   {pickupInstructions}
                 </div>
               </div>
@@ -267,7 +270,7 @@ export function ReservationModal({
                 className="w-full font-semibold"
                 onClick={() => { setOpen(false); router.push("/reservations"); }}
               >
-                Ver minhas reservas
+                {t.reservationModal.viewMyReservations}
               </Button>
             </div>
           )}
@@ -278,7 +281,7 @@ export function ReservationModal({
               <DialogHeader>
                 <DialogTitle className="flex items-center gap-2">
                   <CalendarDays className="h-5 w-5 text-primary" />
-                  Selecione as datas
+                  {t.reservationModal.selectDates}
                 </DialogTitle>
               </DialogHeader>
 
@@ -288,7 +291,7 @@ export function ReservationModal({
                     mode="range"
                     selected={range}
                     onSelect={setRange}
-                    locale={ptBR}
+                    locale={dateLocale}
                     disabled={disabledDays}
                     numberOfMonths={1}
                     style={{
@@ -300,18 +303,18 @@ export function ReservationModal({
 
                 {range?.from && range?.to ? (
                   <div className="rounded-lg bg-secondary px-4 py-2.5 text-sm text-center">
-                    <span className="text-muted-foreground">Período: </span>
+                    <span className="text-muted-foreground">{t.reservationModal.period}</span>
                     <span className="font-medium">
-                      {format(range.from, "dd/MM", { locale: ptBR })} →{" "}
-                      {format(range.to, "dd/MM/yyyy", { locale: ptBR })}
+                      {format(range.from, "dd/MM", { locale: dateLocale })} →{" "}
+                      {format(range.to, "dd/MM/yyyy", { locale: dateLocale })}
                     </span>
                     <span className="text-muted-foreground ml-2">
-                      ({nights} dia{nights !== 1 ? "s" : ""})
+                      ({t.reservationModal.nights(nights)})
                     </span>
                   </div>
                 ) : (
                   <p className="text-center text-xs text-muted-foreground">
-                    Clique no primeiro dia e arraste até o último dia desejado.
+                    {t.reservationModal.dateHint}
                   </p>
                 )}
 
@@ -320,7 +323,7 @@ export function ReservationModal({
                   disabled={!range?.from || !range?.to}
                   onClick={() => setStep("confirm")}
                 >
-                  Continuar
+                  {t.reservationModal.continue}
                 </Button>
               </div>
             </>
@@ -350,7 +353,7 @@ export function ReservationModal({
               {/* Title + board name */}
               <div className="text-center space-y-1 px-1">
                 <p className="text-xs font-medium uppercase tracking-widest text-primary">
-                  Sua próxima sessão te espera
+                  {t.reservationModal.sessionWaiting}
                 </p>
                 <h2 className="text-2xl font-bold">{boardName}</h2>
               </div>
@@ -360,24 +363,24 @@ export function ReservationModal({
                 <div className="grid grid-cols-2 gap-3">
                   <div className="rounded-xl border border-border bg-card/60 px-4 py-3 text-center">
                     <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-                      Retirada
+                      {t.reservationModal.pickup}
                     </p>
                     <p className="text-lg font-bold leading-tight">
-                      {format(range.from, "dd", { locale: ptBR })}
+                      {format(range.from, "dd", { locale: dateLocale })}
                     </p>
                     <p className="text-xs text-muted-foreground capitalize">
-                      {format(range.from, "MMMM", { locale: ptBR })}
+                      {format(range.from, "MMMM", { locale: dateLocale })}
                     </p>
                   </div>
                   <div className="rounded-xl border border-border bg-card/60 px-4 py-3 text-center">
                     <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-                      Devolução
+                      {t.reservationModal.return}
                     </p>
                     <p className="text-lg font-bold leading-tight">
-                      {format(range.to, "dd", { locale: ptBR })}
+                      {format(range.to, "dd", { locale: dateLocale })}
                     </p>
                     <p className="text-xs text-muted-foreground capitalize">
-                      {format(range.to, "MMMM", { locale: ptBR })}
+                      {format(range.to, "MMMM", { locale: dateLocale })}
                     </p>
                   </div>
                 </div>
@@ -387,7 +390,7 @@ export function ReservationModal({
               <div className="flex gap-2.5 rounded-xl bg-primary/5 border border-primary/20 px-4 py-3 text-xs text-muted-foreground">
                 <MapPin className="h-3.5 w-3.5 shrink-0 mt-0.5 text-primary" />
                 <div>
-                  <p className="font-semibold text-primary mb-0.5">Local de retirada</p>
+                  <p className="font-semibold text-primary mb-0.5">{t.reservationModal.pickupLocationLabel}</p>
                   {pickupInstructions}
                 </div>
               </div>
@@ -400,14 +403,14 @@ export function ReservationModal({
                   onClick={() => setStep("calendar")}
                   disabled={loading}
                 >
-                  Voltar
+                  {t.reservationModal.back}
                 </Button>
                 <Button
                   className="flex-1 font-semibold"
                   disabled={loading}
                   onClick={handleSubmit}
                 >
-                  {loading ? "Confirmando..." : "Confirmar reserva"}
+                  {loading ? t.reservationModal.confirming : t.reservationModal.confirmReservation}
                 </Button>
               </div>
             </div>

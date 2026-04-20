@@ -5,20 +5,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, MapPin } from "lucide-react";
 import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
+import { ptBR, enUS } from "date-fns/locale";
 import Link from "next/link";
 import {
   ReservationDetailModal,
   type ReservationDetail,
 } from "@/components/reservations/ReservationDetailModal";
-
-const STATUS_LABELS: Record<string, string> = {
-  PENDING: "Pendente",
-  CONFIRMED: "Confirmada",
-  ACTIVE: "Ativa",
-  RETURNED: "Devolvida",
-  CANCELLED: "Cancelada",
-};
+import { useT } from "@/lib/i18n/client";
 
 const STATUS_STYLES: Record<string, string> = {
   PENDING: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
@@ -32,6 +25,8 @@ export default function ReservationsPage() {
   const [reservations, setReservations] = useState<ReservationDetail[]>([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<ReservationDetail | null>(null);
+  const { t, locale } = useT();
+  const dateLocale = locale === "pt" ? ptBR : enUS;
 
   const fetchReservations = useCallback(async () => {
     setLoading(true);
@@ -58,7 +53,7 @@ export default function ReservationsPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold">Minhas Reservas</h1>
+          <h1 className="text-2xl font-bold">{t.reservations.title}</h1>
         </div>
         <div className="space-y-3">
           {[1, 2, 3].map((i) => (
@@ -73,24 +68,24 @@ export default function ReservationsPage() {
     <>
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold">Minhas Reservas</h1>
+          <h1 className="text-2xl font-bold">{t.reservations.title}</h1>
           <p className="text-muted-foreground mt-1">
-            {reservations.length} reserva{reservations.length !== 1 ? "s" : ""} no total
+            {t.reservations.total(reservations.length)}
           </p>
         </div>
 
         {reservations.length === 0 ? (
           <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border py-16 text-center">
             <div className="text-5xl mb-4">📅</div>
-            <p className="font-semibold text-lg">Nenhuma reserva ainda</p>
+            <p className="font-semibold text-lg">{t.reservations.empty}</p>
             <p className="text-muted-foreground text-sm mt-1">
-              Explore as pranchas disponíveis e faça sua primeira reserva.
+              {t.reservations.emptyText}
             </p>
             <Link
               href="/boards"
               className="mt-4 inline-flex items-center gap-1.5 text-primary text-sm hover:underline"
             >
-              Ver pranchas disponíveis →
+              {t.reservations.emptyLink}
             </Link>
           </div>
         ) : (
@@ -130,12 +125,12 @@ export default function ReservationsPage() {
 
                     <div className="flex flex-col items-end gap-2">
                       <Badge variant="secondary" className={STATUS_STYLES[r.status]}>
-                        {STATUS_LABELS[r.status]}
+                        {t.reservations.status[r.status as keyof typeof t.reservations.status]}
                       </Badge>
                       <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                         <CalendarDays className="h-3.5 w-3.5" />
-                        {format(new Date(r.startDate), "dd/MM/yyyy", { locale: ptBR })} →{" "}
-                        {format(new Date(r.endDate), "dd/MM/yyyy", { locale: ptBR })}
+                        {format(new Date(r.startDate), "dd/MM/yyyy", { locale: dateLocale })} →{" "}
+                        {format(new Date(r.endDate), "dd/MM/yyyy", { locale: dateLocale })}
                       </div>
                     </div>
                   </div>

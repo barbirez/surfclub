@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import { DestinationCard } from "@/components/ui/destination-card";
+import { useT } from "@/lib/i18n/client";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -60,6 +61,7 @@ const DESTINATIONS = [
 
 export function ExplorePlacesSection() {
   const [paused, setPaused] = useState(false);
+  const { t } = useT();
   const items = [...DESTINATIONS, ...DESTINATIONS];
 
   return (
@@ -86,13 +88,13 @@ export function ExplorePlacesSection() {
         transition={{ duration: 0.7, ease: EASE }}
       >
         <p className="text-sm font-bold uppercase tracking-widest text-primary-light">
-          Explore por lugares
+          {t.explore.label}
         </p>
         <h2 className="text-4xl font-extrabold sm:text-5xl">
-          Onde você vai surfar?
+          {t.explore.heading}
         </h2>
         <p className="text-muted-foreground max-w-md mx-auto">
-          Pranchas disponíveis nas melhores praias do Brasil.
+          {t.explore.subheading}
         </p>
       </motion.div>
 

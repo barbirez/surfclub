@@ -4,8 +4,11 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { Camera, MessageCircle, CirclePlay } from "lucide-react";
 import { Footer } from "@/components/ui/footer";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
+import { useT } from "@/lib/i18n/client";
 
 export function LandingFooter() {
+  const { t } = useT();
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -43,19 +46,20 @@ export function LandingFooter() {
           },
         ]}
         mainLinks={[
-          { href: "/boards", label: "Pranchas" },
-          { href: "#how-it-works", label: "Como funciona" },
-          { href: "#pricing", label: "Planos" },
-          { href: "/login", label: "Entrar" },
+          { href: "/boards", label: t.footer.boards },
+          { href: "#how-it-works", label: t.footer.howItWorks },
+          { href: "#pricing", label: t.footer.plans },
+          { href: "/login", label: t.footer.signIn },
         ]}
         legalLinks={[
-          { href: "/privacy", label: "Privacidade" },
-          { href: "/terms", label: "Termos de uso" },
+          { href: "/privacy", label: t.footer.privacy },
+          { href: "/terms", label: t.footer.terms },
         ]}
         copyright={{
           text: `© ${new Date().getFullYear()} WavyClub`,
-          license: "Feito de surfistas para surfistas.",
+          license: t.footer.license,
         }}
+        languageSwitcher={<LanguageSwitcher />}
       />
     </motion.div>
   );

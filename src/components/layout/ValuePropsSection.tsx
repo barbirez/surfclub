@@ -1,29 +1,18 @@
 "use client";
 
 import { MagicText } from "@/components/ui/magic-text";
-
-const VALUE_PROPS = [
-  {
-    emoji: "\uD83C\uDF0A",
-    title: "Voc\u00ea \u00e9 viajante?",
-    text: "Chegou numa praia nova sem prancha? A gente tem o quiver local esperando por voc\u00ea.",
-  },
-  {
-    emoji: "\uD83C\uDFC4",
-    title: "Voc\u00ea surfa sempre na mesma praia?",
-    text: "Para de perder sess\u00e3o por falta de prancha certa. Com o WavyClub voc\u00ea tem um quiver completo dispon\u00edvel.",
-  },
-  {
-    emoji: "\uD83D\uDCC8",
-    title: "Voc\u00ea est\u00e1 evoluindo?",
-    text: "Testa diferentes volumes e shapes antes de investir na sua pr\u00f3pria prancha.",
-  },
-];
+import { useT } from "@/lib/i18n/client";
 
 export function ValuePropsSection() {
+  const { t } = useT();
+  const items = [
+    { emoji: "\uD83C\uDF0A", title: t.valueProps.traveler.title, text: t.valueProps.traveler.text },
+    { emoji: "\uD83C\uDFC4", title: t.valueProps.local.title, text: t.valueProps.local.text },
+    { emoji: "\uD83D\uDCC8", title: t.valueProps.evolving.title, text: t.valueProps.evolving.text },
+  ];
   return (
     <section className="mx-auto max-w-4xl px-4 py-24 sm:px-6 space-y-20">
-      {VALUE_PROPS.map((prop) => (
+      {items.map((prop) => (
         <div key={prop.title} className="space-y-2">
           <h3 className="text-lg font-bold text-primary-light px-4">
             {prop.emoji} {prop.title}

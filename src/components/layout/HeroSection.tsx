@@ -4,20 +4,21 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
 import { motion } from "motion/react";
-
-const TRUST_SIGNALS = [
-  "Cadastro em 2 minutos",
-  "80+ picos no Brasil",
-  "Cobertura de danos incluída",
-  "Clube de vantagens",
-];
+import { useT } from "@/lib/i18n/client";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function HeroSection() {
+  const { t } = useT();
+  const trustSignals = [
+    t.hero.trust.signup,
+    t.hero.trust.spots,
+    t.hero.trust.damage,
+    t.hero.trust.club,
+  ];
   return (
     <>
-      <section className="relative overflow-hidden min-h-[90vh] flex items-center">
+      <section className="relative overflow-hidden min-h-screen flex items-center">
         {/* Video background — poster shows instantly, video fades in on load */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden bg-[#0a1220]">
           <video
@@ -44,7 +45,7 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
             >
-              Sua próxima sessão de surf começa aqui!
+              {t.hero.title}
             </motion.h1>
 
             <motion.p
@@ -53,7 +54,7 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: EASE, delay: 0.35 }}
             >
-              Acesso ilimitado a pranchas de surf e todas as vantagens que os surfistas precisam.
+              {t.hero.subtitle}
             </motion.p>
 
             <motion.div
@@ -68,7 +69,7 @@ export function HeroSection() {
                 className="h-12 px-8 text-base font-semibold rounded-full shadow-lg"
               >
                 <Link href="/boards">
-                  Começar Agora
+                  {t.hero.primaryCta}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -78,7 +79,7 @@ export function HeroSection() {
                 size="lg"
                 className="h-12 px-8 text-base rounded-full backdrop-blur-sm bg-white/10 border-white/30 text-white hover:bg-white/20"
               >
-                <Link href="/#pricing">Ver planos</Link>
+                <Link href="/#pricing">{t.hero.secondaryCta}</Link>
               </Button>
             </motion.div>
           </div>
@@ -93,7 +94,7 @@ export function HeroSection() {
         transition={{ duration: 0.6, delay: 0.85 }}
       >
         <div className="mx-auto max-w-6xl flex flex-wrap justify-center gap-x-10 gap-y-3">
-          {TRUST_SIGNALS.map((signal, i) => (
+          {trustSignals.map((signal, i) => (
             <motion.div
               key={signal}
               className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-foreground/55"

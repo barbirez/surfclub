@@ -21,6 +21,7 @@ interface FooterProps {
     text: string;
     license?: string;
   };
+  languageSwitcher?: React.ReactNode;
 }
 
 export function Footer({
@@ -30,6 +31,7 @@ export function Footer({
   mainLinks,
   legalLinks,
   copyright,
+  languageSwitcher,
 }: FooterProps) {
   return (
     <footer className="pb-6 pt-16 lg:pb-8 lg:pt-20">
@@ -66,6 +68,9 @@ export function Footer({
             <div>{copyright.text}</div>
             {copyright.license && (
               <div className="mt-0.5">{copyright.license}</div>
+            )}
+            {languageSwitcher && (
+              <div className="mt-3">{languageSwitcher}</div>
             )}
           </div>
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n/client";
 
 const BOARD_TYPE_LABELS: Record<string, string> = {
   SHORTBOARD: "Shortboard",
@@ -30,6 +31,7 @@ interface BoardCardProps {
 }
 
 export function BoardCard({ board }: BoardCardProps) {
+  const { t } = useT();
   const frontImage = board.images[0];
   const backImage = board.images[1];
   const hasFlip = !!(frontImage && backImage);
@@ -105,7 +107,7 @@ export function BoardCard({ board }: BoardCardProps) {
               size="sm"
               className="pointer-events-none text-base font-semibold rounded-full normal-case shadow-lg"
             >
-              Ver prancha
+              {t.boardCard.viewBoard}
             </Button>
           </div>
         </div>

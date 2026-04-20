@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "motion/react";
 import { TestimonialsColumn } from "@/components/ui/testimonials-columns-1";
+import { useT } from "@/lib/i18n/client";
 
 const testimonials = [
   {
@@ -64,6 +65,7 @@ const secondColumn = testimonials.slice(3, 6);
 const thirdColumn = testimonials.slice(6, 9);
 
 export function TestimonialsSection() {
+  const { t } = useT();
   return (
     <section className="bg-background py-20 relative overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
@@ -75,13 +77,13 @@ export function TestimonialsSection() {
           className="flex flex-col items-center text-center max-w-[540px] mx-auto mb-12"
         >
           <p className="text-sm font-bold uppercase tracking-widest text-primary-light">
-            Depoimentos
+            {t.testimonials.label}
           </p>
           <h2 className="text-4xl font-extrabold sm:text-5xl">
-            Quem surfa, aprova
+            {t.testimonials.heading}
           </h2>
           <p className="mt-3 text-muted-foreground">
-            Surfistas de todo o Brasil já usam o Surf Pack para aproveitar cada onda.
+            {t.testimonials.subheading}
           </p>
         </motion.div>
 

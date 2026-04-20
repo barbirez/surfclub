@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { ReservationModal } from "@/components/reservations/ReservationModal";
 import { BoardCard } from "@/components/boards/BoardCard";
 import { BoardDetailImage } from "@/components/boards/BoardDetailImage";
+import { getT } from "@/lib/i18n/server";
 
 const BOARD_TYPE_LABELS: Record<string, string> = {
   SHORTBOARD: "Shortboard",
@@ -27,6 +28,7 @@ export default async function BoardDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const { t } = await getT();
 
   // Auth is optional — page is public
   const session = await auth();
@@ -78,7 +80,7 @@ export default async function BoardDetailPage({
       <Button asChild variant="ghost" size="sm" className="-ml-2 text-muted-foreground">
         <Link href="/boards">
           <ArrowLeft className="h-4 w-4 mr-1.5" />
-          Pranchas
+          {t.boardDetail.backLink}
         </Link>
       </Button>
 
@@ -98,7 +100,7 @@ export default async function BoardDetailPage({
               {BOARD_TYPE_LABELS[board.type] || board.type}
             </Badge>
             <Badge className="bg-green-500/10 text-green-400 border-green-500/20">
-              Disponível
+              {t.boardDetail.available}
             </Badge>
           </div>
 
@@ -116,14 +118,14 @@ export default async function BoardDetailPage({
             <div className="rounded-xl bg-secondary p-3">
               <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
                 <Ruler className="h-3.5 w-3.5" />
-                Tamanho
+                {t.boardDetail.size}
               </div>
               <p className="font-semibold">{board.size}</p>
             </div>
             <div className="rounded-xl bg-secondary p-3">
               <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
                 <Droplets className="h-3.5 w-3.5" />
-                Volume
+                {t.boardDetail.volume}
               </div>
               <p className="font-semibold">{board.volumeLiters}L</p>
             </div>
@@ -131,7 +133,7 @@ export default async function BoardDetailPage({
 
           {(board.description || board.conditionProfile) && (
             <div className="space-y-2">
-              <h3 className="font-semibold text-sm mb-1.5">Descrição</h3>
+              <h3 className="font-semibold text-sm mb-1.5">{t.boardDetail.description}</h3>
               {board.description && (
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {board.description}
@@ -161,15 +163,15 @@ export default async function BoardDetailPage({
           <div className="rounded-2xl border border-border bg-card p-4 space-y-3">
             <h3 className="text-sm font-semibold flex items-center gap-2">
               <MapPin className="h-3.5 w-3.5 text-primary" />
-              Local de Retirada
+              {t.boardDetail.pickupLocation}
             </h3>
             <div>
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">Endereço</p>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">{t.boardDetail.address}</p>
               <p className="font-medium text-sm">{board.location.town}, {board.location.city}</p>
               <p className="text-xs text-muted-foreground mt-0.5">{board.location.address}</p>
             </div>
             <div className="rounded-lg bg-secondary border border-border p-3">
-              <p className="text-xs font-semibold mb-1">Instruções de retirada</p>
+              <p className="text-xs font-semibold mb-1">{t.boardDetail.pickupInstructions}</p>
               <p className="text-xs text-muted-foreground leading-relaxed">
                 {board.location.pickupInstructions}
               </p>
@@ -184,9 +186,9 @@ export default async function BoardDetailPage({
           <Separator />
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="font-semibold text-lg">Outras pranchas disponíveis</h2>
+              <h2 className="font-semibold text-lg">{t.boardDetail.otherBoards}</h2>
               <Button asChild variant="ghost" size="sm" className="text-muted-foreground">
-                <Link href="/boards">Ver todas →</Link>
+                <Link href="/boards">{t.boardDetail.seeAll}</Link>
               </Button>
             </div>
             <div className="grid gap-4 grid-cols-2 sm:grid-cols-4">
