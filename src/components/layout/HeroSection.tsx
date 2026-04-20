@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
@@ -13,55 +12,25 @@ const TRUST_SIGNALS = [
   "Clube de vantagens",
 ];
 
-const YT_SRC =
-  "https://www.youtube-nocookie.com/embed/o53RMk0IaiQ" +
-  "?autoplay=1&mute=1&controls=0&loop=1&playlist=o53RMk0IaiQ" +
-  "&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0" +
-  "&playsinline=1";
-
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function HeroSection() {
-  const [videoReady, setVideoReady] = useState(false);
-
   return (
     <>
       <section className="relative overflow-hidden min-h-[90vh] flex items-center">
-        {/* Background layer: fallback image → video fade-in */}
+        {/* Video background — poster shows instantly, video fades in on load */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden bg-[#0a1220]">
-          {/* Poster image — visible instantly, stays underneath */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/hero-video-poster.jpg"
-            alt=""
-            aria-hidden
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/hero-video-poster.jpg"
             className="absolute inset-0 h-full w-full object-cover"
-          />
-
-          {/* YouTube iframe — fades in once loaded */}
-          <iframe
-            src={YT_SRC}
-            allow="autoplay; encrypted-media"
-            allowFullScreen={false}
-            onLoad={() => {
-              // Buffer ~1.5 s after iframe load so the video is actually playing
-              setTimeout(() => setVideoReady(true), 500);
-            }}
-            style={{
-              position: "absolute",
-              width: "100vw",
-              height: "56.25vw",
-              minHeight: "100%",
-              minWidth: "177.78vh",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              border: "none",
-              pointerEvents: "none",
-              opacity: videoReady ? 1 : 0,
-              transition: "opacity 0.5s ease-in-out",
-            }}
-          />
+            style={{ opacity: 1 }}
+          >
+            <source src="/hero-video-web.mp4" type="video/mp4" />
+          </video>
         </div>
 
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/70 via-black/35 to-black/10" />
