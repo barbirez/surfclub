@@ -48,11 +48,21 @@ export function StageBuilding() {
               caption="Raw output, hour 0"
               src="/case-study/before-landing.jpg"
             />
-            <ArtifactFrame
-              label="After taste passes"
-              caption="Hour 36, current production"
-              src="/case-study/after-landing.jpg"
-            />
+            <div className="rounded-2xl border overflow-hidden" style={{ borderColor: "var(--cs-rule)", background: "#000000" }}>
+              <div className="px-5 py-3 border-b flex items-center justify-between text-xs tracking-[0.18em] uppercase" style={{ borderColor: "var(--cs-rule)", color: "var(--cs-ink-muted)", background: "#FFFFFF" }}>
+                <span>After taste passes</span>
+                <span className="text-[10px] normal-case tracking-normal">Hour 36, current production</span>
+              </div>
+              <video
+                src="/casestudy/wavyclub-mockup-pricing.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full block"
+                style={{ aspectRatio: "16 / 10", objectFit: "cover" }}
+              />
+            </div>
           </div>
         </div>
 

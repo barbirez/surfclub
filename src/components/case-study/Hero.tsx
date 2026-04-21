@@ -1,4 +1,3 @@
-import Image from "next/image";
 
 export function Hero() {
   return (
@@ -24,11 +23,22 @@ export function Hero() {
         </p>
 
         {/* Meta line */}
-        <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm" style={{ color: "var(--cs-ink-soft)" }}>
-          <MetaItem label="Duration" value="2 days" />
-          <MetaItem label="Team" value="1 designer-engineer" />
-          <MetaItem label="Method" value="AI-assisted build" />
-          <MetaItem label="Stack" value="Next.js + Vercel" />
+        <div className="mt-12 flex flex-wrap items-center justify-between gap-y-3 text-sm" style={{ color: "var(--cs-ink-soft)" }}>
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
+            <MetaItem label="Duration" value="2 days" />
+            <MetaItem label="Team" value="1 designer-engineer" />
+            <MetaItem label="Method" value="AI-assisted build" />
+            <MetaItem label="Stack" value="Next.js + Vercel" />
+          </div>
+          <a
+            href="https://surfclub-three.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border text-xs tracking-[0.12em] uppercase font-medium transition-colors"
+            style={{ borderColor: "var(--cs-rule)", color: "var(--cs-ink)", background: "transparent" }}
+          >
+            View Live
+          </a>
         </div>
       </div>
 
@@ -68,28 +78,15 @@ P1 Landing → P2 Board menu → P3 Detail
 
           {/* Right: live landing screenshot mock */}
           <div className="rounded-2xl overflow-hidden border relative aspect-[4/5] md:aspect-auto" style={{ borderColor: "var(--cs-rule)", background: "var(--cs-product-bg)" }}>
-            <div className="flex items-center gap-1.5 px-4 py-3 border-b" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
-              <span className="h-2.5 w-2.5 rounded-full" style={{ background: "rgba(255,255,255,0.2)" }} />
-              <span className="h-2.5 w-2.5 rounded-full" style={{ background: "rgba(255,255,255,0.2)" }} />
-              <span className="h-2.5 w-2.5 rounded-full" style={{ background: "rgba(255,255,255,0.2)" }} />
-              <span className="ml-3 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>wavyclub.app</span>
-            </div>
             <div className="relative w-full h-full" style={{ minHeight: "420px" }}>
-              <Image
-                src="/hero-beach.jpg"
-                alt="WavyClub landing page"
-                fill
-                className="object-cover opacity-90"
-                priority
+              <video
+                src="/casestudy/wavyclub-mockup-intro.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
               />
-              <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-10" style={{ background: "linear-gradient(to top, rgba(26,29,41,0.85), rgba(26,29,41,0.1))" }}>
-                <p className="text-[10px] tracking-[0.2em] uppercase mb-3" style={{ color: "#F5C542" }}>
-                  Unlimited surfboards
-                </p>
-                <h2 className="font-serif text-3xl md:text-4xl leading-tight" style={{ color: "var(--cs-product-ink)" }}>
-                  The right board, <br />wherever you surf.
-                </h2>
-              </div>
             </div>
           </div>
         </div>

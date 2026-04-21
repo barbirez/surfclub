@@ -1,5 +1,6 @@
 import { Hero } from "@/components/case-study/Hero";
 import { Manifesto } from "@/components/case-study/Manifesto";
+import { ProductScroll } from "@/components/case-study/ProductScroll";
 import { Loop } from "@/components/case-study/Loop";
 import { Reference } from "@/components/case-study/Reference";
 import { StageFraming } from "@/components/case-study/StageFraming";
@@ -19,6 +20,7 @@ export default function CaseStudyPage() {
       <Hero />
       <StagesMarquee />
       <Manifesto />
+      <ProductScroll />
       <Loop />
       <Reference />
       <StageFraming />
