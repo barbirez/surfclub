@@ -23,7 +23,7 @@ export function CaseStudyFooter() {
           />
           <CTALink
             label="Email me"
-            href="mailto:hi@barbararezende.com"
+            href="mailto:barbararezendeso@gmail.com"
             arrow="✉"
           />
         </div>

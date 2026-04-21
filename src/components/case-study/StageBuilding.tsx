@@ -3,23 +3,23 @@ import { StageHeader } from "./StageHeader";
 const OBSERVATIONS = [
   {
     num: "01",
-    title: "The shaping document did most of the real work.",
-    body: "Where the specification was clear, AI moved fast. Where it was vague, the output needed the most correction. The upstream discipline isn't separate from the build — it is the build.",
+    title: "Specification is the new craft.",
+    body: "A clearer brief upstream means less correction downstream. The thinking moved earlier in the process — not away from me.",
   },
   {
     num: "02",
-    title: "Taste stayed editorial.",
-    body: "Type, motion, spacing, the difference between an interface that feels right and one that feels generic — AI defaults to the average of what it's seen. The job of the designer becomes selection. Knowing which patterns to keep, which to reject, when to stop the machine from producing something competent but forgettable.",
+    title: "Taste is the part that can't be delegated.",
+    body: "AI produces the average of what it has seen. The designer's job becomes editorial: knowing what to keep, what to reject, and when to stop.",
   },
   {
     num: "03",
-    title: "Asking the right question is the skill.",
-    body: "The quality of the output tracks the quality of the question. \"Make this look better\" produces noise. \"The paddle-out illustration needs to read as motion at a glance, not as decoration — simplify the line weight and remove the background\" produces something useful. Building this vocabulary is a large part of what I'm practicing.",
+    title: "The question is the output.",
+    body: "\"Make this better\" produces noise. A specific, well-framed question produces something usable. Writing good questions is its own design skill.",
   },
   {
     num: "04",
-    title: "Rhythm is the other skill.",
-    body: "When to specify precisely, when to let AI explore, when to stop and redirect. This doesn't come from a tutorial. It comes from reps.",
+    title: "Rhythm matters more than speed.",
+    body: "Knowing when to specify, when to let AI explore, when to redirect — that's feel, not formula. Built through reps.",
   },
 ];
 

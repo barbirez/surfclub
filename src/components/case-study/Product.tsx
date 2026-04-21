@@ -1,15 +1,15 @@
 const DESIGN_DECISIONS = [
   {
-    title: "Progressive commitment.",
-    body: "Users browse freely. The liability gate appears at reservation — commitment earned at the moment it matters, not demanded upfront.",
+    title: "Tokens first, screens second.",
+    body: "Color, type scale, spacing, radius — defined once, consumed everywhere. Hardcoded values are banned. The system is the decision; the screens are the consequence.",
   },
   {
-    title: "Familiar patterns over novelty.",
-    body: "The date picker is Airbnb's. The filters are category-standard. Novelty is expensive; I spent it on what actually differentiates the product.",
+    title: "Atomic, not ornamental.",
+    body: "Every component is built from the same small set of primitives. A button and a card share the same spacing logic. A filter chip and a tag share the same type ramp. The constraint is what makes the visual system feel coherent — not taste applied at the end, but structure enforced from the start.",
   },
   {
-    title: "Disclose before commit.",
-    body: "Damage terms are a blocking screen, not a footer link. From benchmark research: post-session disputes are the top churn cause in gear rental.",
+    title: "Aesthetic direction, chosen fast.",
+    body: "One direction, committed to early: dark-mode surfaces, considered type, a warm accent that pulls against the cool neutrals. Decided in the first two hours. Not revisited. Revisiting is the thing that eats time.",
   },
 ];
 

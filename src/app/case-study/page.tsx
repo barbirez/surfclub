@@ -9,6 +9,7 @@ import { StageBreadboard } from "@/components/case-study/StageBreadboard";
 import { StageBuilding } from "@/components/case-study/StageBuilding";
 import { StageShipping } from "@/components/case-study/StageShipping";
 import { Product } from "@/components/case-study/Product";
+import { BuildGallery } from "@/components/case-study/BuildGallery";
 import { Reflection } from "@/components/case-study/Reflection";
 import { WhatsNext } from "@/components/case-study/WhatsNext";
 import { CaseStudyFooter } from "@/components/case-study/CaseStudyFooter";
@@ -29,6 +30,7 @@ export default function CaseStudyPage() {
       <StageBuilding />
       <StageShipping />
       <Product />
+      <BuildGallery />
       <Reflection />
       <WhatsNext />
       <CaseStudyFooter />

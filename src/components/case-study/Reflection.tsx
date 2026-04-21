@@ -12,7 +12,7 @@ export function Reflection() {
 
         <div className="space-y-8 text-lg leading-relaxed" style={{ color: "var(--cs-ink-soft)" }}>
           <p>
-            The first experiment taught me the form — what shaping is, what a breadboard looks like, what it feels like to write requirements before design. This one taught me which parts of the form I can trust, and which parts need more reps. I know now that my framing is getting sharper and my shaping is getting more honest. I know I still over-specify in places AI would have found a better path, and under-specify in places where precision would have saved an hour.
+            The <a href="https://project-o2yph.vercel.app/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2" style={{ color: "var(--cs-ink)" }}>first experiment</a> taught me the form — what shaping is, what a breadboard looks like, what it feels like to write requirements before design. This one taught me which parts of the form I can trust, and which parts need more reps. I know now that my framing is getting sharper and my shaping is getting more honest. I know I still over-specify in places AI would have found a better path, and under-specify in places where precision would have saved an hour.
           </p>
           <p>
             The next experiment in the series will test a different constraint — probably a greenfield brief instead of a reference, to isolate the framing stage. The one after that, a project where the AI pair is embedded earlier in the loop rather than activating at Build. Each one is designed to stress a different part of the practice.

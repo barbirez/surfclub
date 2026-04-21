@@ -1,20 +1,5 @@
 import { StageHeader } from "./StageHeader";
 
-const CUTS = [
-  {
-    title: "No user accounts in V1.",
-    body: "Email confirmation is enough to test the hypothesis.",
-  },
-  {
-    title: "No payment processing in-app.",
-    body: "Handled manually. Not a technical gap — a scope decision.",
-  },
-  {
-    title: "No delivery.",
-    body: "Pickup only. Stated clearly so expectations land before friction does.",
-  },
-];
-
 export function StageShipping() {
   return (
     <section className="py-32">
@@ -26,33 +11,39 @@ export function StageShipping() {
         />
 
         <p className="text-lg leading-relaxed max-w-3xl mb-16" style={{ color: "var(--cs-ink-soft)" }}>
-          Three deliberate cuts.
+          Two days forces choices. Here&apos;s what I chose to finish, and what I left rough:
         </p>
 
-        <ol className="space-y-px border-y" style={{ borderColor: "var(--cs-rule)" }}>
-          {CUTS.map((cut, i) => (
-            <li key={i} className="grid grid-cols-12 gap-6 py-10 border-t" style={{ borderColor: "var(--cs-rule)" }}>
-              <div className="col-span-2 md:col-span-1">
-                <span className="font-mono text-sm" style={{ color: "var(--cs-ink-muted)" }}>
-                  ×
-                </span>
-              </div>
-              <div className="col-span-10 md:col-span-6">
-                <h3 className="font-serif text-2xl md:text-3xl leading-snug" style={{ color: "var(--cs-ink)" }}>
-                  {cut.title}
-                </h3>
-              </div>
-              <div className="col-span-12 md:col-span-5">
-                <p className="text-base leading-relaxed pt-2 md:pt-3" style={{ color: "var(--cs-ink-soft)" }}>
-                  {cut.body}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ol>
+        <div className="border-y divide-y" style={{ borderColor: "var(--cs-rule)" }}>
+          <div className="grid grid-cols-12 gap-6 py-12" style={{ borderColor: "var(--cs-rule)" }}>
+            <div className="col-span-12 md:col-span-5">
+              <h3 className="font-serif text-2xl md:text-3xl leading-snug" style={{ color: "var(--cs-ink)" }}>
+                What I finished.
+              </h3>
+            </div>
+            <div className="col-span-12 md:col-span-7">
+              <p className="text-base leading-relaxed pt-2 md:pt-3" style={{ color: "var(--cs-ink-soft)" }}>
+                The core loop — browse available boards, book one, see the reservation, cancel if needed. The thing that had to actually work, actually works.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-12 gap-6 py-12" style={{ borderColor: "var(--cs-rule)" }}>
+            <div className="col-span-12 md:col-span-5">
+              <h3 className="font-serif text-2xl md:text-3xl leading-snug" style={{ color: "var(--cs-ink)" }}>
+                What I left rough.
+              </h3>
+            </div>
+            <div className="col-span-12 md:col-span-7">
+              <p className="text-base leading-relaxed pt-2 md:pt-3" style={{ color: "var(--cs-ink-soft)" }}>
+                The filtering system could be smarter. Skill level, wave type, location — each one deserves real thinking, and with two days I gave it a working version instead of a considered one. The UI details in the board browse could hold more polish: card hierarchy, photography treatment, empty states. All of it shippable, none of it finished.
+              </p>
+            </div>
+          </div>
+        </div>
 
         <p className="text-lg leading-relaxed max-w-3xl mt-16" style={{ color: "var(--cs-ink-soft)" }}>
-          Shipping isn&apos;t the end of the loop. It&apos;s the stage where the product stops being theoretical and starts producing signal. Surface area small enough to make that signal diagnosable is itself a design decision.
+          Shipping at this scope isn&apos;t about calling something done. It&apos;s about knowing what to leave rough so the parts that matter can be right. Tight scope is the discipline that makes AI-assisted building honest — without it, the tool just accelerates drift.
         </p>
       </div>
     </section>

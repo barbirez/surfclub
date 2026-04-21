@@ -8,8 +8,8 @@ const NEXT = [
     body: "The first operational bottleneck as the product scales.",
   },
   {
-    title: "Cancel & reschedule",
-    body: "The biggest post-launch friction point still unresolved.",
+    title: "Location-aware matching",
+    body: "Filter boards by spot, not just by inventory. Recommend shapes based on the break and the forecast.",
   },
 ];
 
@@ -18,10 +18,10 @@ export function WhatsNext() {
     <section className="py-32">
       <div className="mx-auto max-w-7xl px-6">
         <p className="text-xs tracking-[0.22em] uppercase mb-6" style={{ color: "var(--cs-ink-muted)" }}>
-          ✦ &nbsp;What&apos;s next for WavyClub
+          ✦ &nbsp;If this were real
         </p>
         <h2 className="font-serif text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] tracking-tight max-w-3xl mb-16">
-          The honest list of what&apos;s still missing.
+          What the next build would prioritize.
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
