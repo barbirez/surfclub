@@ -29,7 +29,7 @@ export function CaseStudyFooter() {
         </div>
 
         <div className="border-t pt-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6 text-xs tracking-[0.18em] uppercase" style={{ borderColor: "rgba(245,243,238,0.12)", color: "rgba(245,243,238,0.5)" }}>
-          <span>Barbara Rezende — №02 of N</span>
+          <span>Barbara Rezende — №02 of 5</span>
           <span>WavyClub · Experiments in building with AI · 2026</span>
           <a
             href="https://www.barbararezende.com/"
@@ -66,7 +66,7 @@ function CTALink({
       style={{
         borderColor: primary ? "var(--cs-accent)" : "rgba(245,243,238,0.12)",
         background: primary ? "var(--cs-accent)" : "transparent",
-        color: primary ? "var(--cs-product-bg)" : "var(--cs-product-ink)",
+        color: primary ? "#ffffff" : "var(--cs-product-ink)",
       }}
     >
       <span className="font-serif text-2xl">{label}</span>

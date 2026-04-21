@@ -81,10 +81,12 @@ function ScreenItem({
 
 export function BuildGallery() {
   const textRotateRef = useRef<TextRotateRef>(null)
+  const captionRotateRef = useRef<TextRotateRef>(null)
 
   const handleInView = (index: number, inView: boolean) => {
-    if (inView && textRotateRef.current) {
-      textRotateRef.current.jumpTo(index)
+    if (inView) {
+      textRotateRef.current?.jumpTo(index)
+      captionRotateRef.current?.jumpTo(index)
     }
   }
 
@@ -130,6 +132,7 @@ export function BuildGallery() {
           </div>
           <div className="mt-4">
             <TextRotate
+              ref={captionRotateRef}
               texts={SCREENS.map((s) => s.caption)}
               mainClassName="text-base"
               splitBy="words"
