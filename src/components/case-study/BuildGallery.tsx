@@ -112,7 +112,7 @@ export function BuildGallery() {
           <p className="text-xs tracking-[0.22em] uppercase mb-6" style={{ color: "var(--cs-ink-muted)" }}>
             ✦ &nbsp;Four screens shipped
           </p>
-          <div className="overflow-hidden">
+          <div className="overflow-hidden" style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "var(--cs-ink)" }}>
             <TextRotate
               ref={textRotateRef}
               texts={SCREENS.map((s) => s.label)}
@@ -127,10 +127,9 @@ export function BuildGallery() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -40 }}
               transition={{ type: "spring", duration: 0.5, bounce: 0 }}
-              style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "var(--cs-ink)" } as React.CSSProperties}
             />
           </div>
-          <div className="mt-4">
+          <div className="mt-4" style={{ color: "var(--cs-ink-soft)" }}>
             <TextRotate
               ref={captionRotateRef}
               texts={SCREENS.map((s) => s.caption)}
@@ -145,7 +144,6 @@ export function BuildGallery() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ type: "spring", duration: 0.35, bounce: 0 }}
-              style={{ color: "var(--cs-ink-soft)" } as React.CSSProperties}
             />
           </div>
         </div>
