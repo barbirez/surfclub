@@ -15,9 +15,11 @@ export function isSubscribed(
 }
 
 export function hasAccess(
-  user: Pick<User, "plan" | "trialEndsAt" | "stripeCurrentPeriodEnd">
+  _user: Pick<User, "plan" | "trialEndsAt" | "stripeCurrentPeriodEnd">
 ): boolean {
-  return isTrialActive(user) || isSubscribed(user);
+  // Prelaunch: every authenticated user can reserve. Re-enable gating once
+  // paid plans launch by restoring `isTrialActive(_user) || isSubscribed(_user)`.
+  return true;
 }
 
 export function daysLeftInTrial(

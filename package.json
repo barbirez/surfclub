@@ -14,6 +14,7 @@
     "db:studio": "prisma studio",
     "db:generate": "prisma generate",
     "db:seed": "tsx prisma/seed.ts",
+    "db:reset-reservations": "tsx prisma/reset-reservations.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
