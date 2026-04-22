@@ -1,0 +1,62 @@
+/* Light, gallery-portfolio palette scoped to the case study route only.
+   Does not touch the rest of the app. */
+.cs-root {
+  --cs-bg: #FAF8F5;
+  --cs-bg-alt: #F2EEE7;
+  --cs-ink: #14161C;
+  --cs-ink-soft: #4B4F5A;
+  --cs-ink-muted: #8A8F9C;
+  --cs-rule: #E4DFD6;
+  --cs-accent: #3366FF;
+  --cs-accent-soft: #EEF2FF;
+  --cs-product-bg: #1A1D29;
+  --cs-product-ink: #F5F3EE;
+
+  background: var(--cs-bg);
+  color: var(--cs-ink);
+  min-height: 100vh;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.cs-root .font-serif {
+  font-family: var(--font-serif), "Times New Roman", serif;
+}
+
+/* Glyph divider strip */
+.cs-divider {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  color: var(--cs-ink-muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.cs-divider::before,
+.cs-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--cs-rule);
+}
+
+/* Marquee strip */
+@keyframes cs-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.cs-marquee {
+  display: flex;
+  width: max-content;
+  animation: cs-marquee 40s linear infinite;
+}
+
+/* Reveal */
+@keyframes cs-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.cs-rise {
+  animation: cs-rise 0.7s ease-out both;
+}
