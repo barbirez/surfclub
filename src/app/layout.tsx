@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "@/components/layout/Providers";
 import { Toaster } from "@/components/ui/sonner";
 import { getT, htmlLang } from "@/lib/i18n/server";
+import { Analytics } from "@vercel/analytics/next";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -47,6 +48,7 @@ export default async function RootLayout({
       <body className={`${plusJakartaSans.variable} ${geistMono.variable} antialiased`}>
         <Providers initialLocale={locale}>{children}</Providers>
         <Toaster />
+        <Analytics />
       </body>
     </html>
   );
