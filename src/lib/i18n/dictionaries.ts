@@ -141,7 +141,7 @@ const pt = {
   testimonials: {
     label: "Depoimentos",
     heading: "Quem surfa, aprova",
-    subheading: "Surfistas de todo o Brasil já usam o Surf Pack para aproveitar cada onda.",
+    subheading: "Surfistas de todo o Brasil já usam o Wavy Club para aproveitar cada onda.",
   },
   cta: {
     label: "Próxima sessão",
@@ -401,7 +401,7 @@ const en: typeof pt = {
   testimonials: {
     label: "Testimonials",
     heading: "Surfers approve",
-    subheading: "Surfers from all over Brazil use Surf Pack to make the most of every wave.",
+    subheading: "Surfers from all over Brazil use Wavy Club to make the most of every wave.",
   },
   cta: {
     label: "Next session",

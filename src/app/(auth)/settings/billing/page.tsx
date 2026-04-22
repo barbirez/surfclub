@@ -58,7 +58,7 @@ export default function BillingPage() {
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="font-semibold text-lg">Surf Pack PRO</p>
+              <p className="font-semibold text-lg">Wavy Club PRO</p>
               <p className="text-sm text-muted-foreground">R$ 289,00 / mês</p>
             </div>
             <Badge className="bg-accent/15 text-accent border-accent/30">

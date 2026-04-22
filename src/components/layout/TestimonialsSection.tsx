@@ -5,7 +5,7 @@ import { useT } from "@/lib/i18n/client";
 
 const testimonials = [
   {
-    text: "Fui passar uma semana em Maresias sem minha prancha e o Surf Pack salvou minha viagem. Reservei uma longboard em 2 minutos e surfei todos os dias.",
+    text: "Fui passar uma semana em Maresias sem minha prancha e o Wavy Club salvou minha viagem. Reservei uma longboard em 2 minutos e surfei todos os dias.",
     image: "https://randomuser.me/api/portraits/men/32.jpg",
     name: "Lucas Ferreira",
     role: "Surfista amador · São Paulo",
@@ -17,7 +17,7 @@ const testimonials = [
     role: "Surfista · Rio de Janeiro",
   },
   {
-    text: "Testei uma fish 5'8 antes de comprar a minha. O Surf Pack me poupou muito dinheiro — acabei escolhendo outro shape que funcionou melhor.",
+    text: "Testei uma fish 5'8 antes de comprar a minha. O Wavy Club me poupou muito dinheiro — acabei escolhendo outro shape que funcionou melhor.",
     image: "https://randomuser.me/api/portraits/men/11.jpg",
     name: "Rafael Oliveira",
     role: "Intermediário · Florianópolis",
@@ -41,7 +41,7 @@ const testimonials = [
     role: "Surfista · Itacaré",
   },
   {
-    text: "Uso o Surf Pack toda vez que vou pra Floripa visitar família. Economizo no despacho e ainda testo pranchas novas. Recomendo demais.",
+    text: "Uso o Wavy Club toda vez que vou pra Floripa visitar família. Economizo no despacho e ainda testo pranchas novas. Recomendo demais.",
     image: "https://randomuser.me/api/portraits/men/76.jpg",
     name: "Thiago Mendes",
     role: "Surfista · Curitiba",
