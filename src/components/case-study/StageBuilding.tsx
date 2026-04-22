@@ -118,7 +118,6 @@ export function StageBuilding() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <ArtifactFrame
               label="Initial AI generation"
-              caption="Raw output, hour 0"
               src="/casestudy/AIGeneration-easysurf.jpg"
               onClick={() => setLightbox({ type: "image", src: "/casestudy/AIGeneration-easysurf.jpg", label: "Initial AI generation" })}
             />
@@ -127,9 +126,8 @@ export function StageBuilding() {
               style={{ borderColor: "var(--cs-rule)", background: "#000000" }}
               onClick={() => setLightbox({ type: "video", src: "/casestudy/wavyclub-mockup-pricing.mp4", label: "After taste passes" })}
             >
-              <div className="px-5 py-3 border-b flex items-center justify-between text-xs tracking-[0.18em] uppercase" style={{ borderColor: "var(--cs-rule)", color: "var(--cs-ink-muted)", background: "#FFFFFF" }}>
+              <div className="px-5 py-3 border-b text-xs tracking-[0.18em] uppercase" style={{ borderColor: "var(--cs-rule)", color: "var(--cs-ink-muted)", background: "#FFFFFF" }}>
                 <span>After taste passes</span>
-                <span className="text-[10px] normal-case tracking-normal">Hour 36, current production</span>
               </div>
               <video
                 src="/casestudy/wavyclub-mockup-pricing.mp4"
@@ -175,12 +173,10 @@ export function StageBuilding() {
 
 function ArtifactFrame({
   label,
-  caption,
   src,
   onClick,
 }: {
   label: string
-  caption: string
   src: string
   onClick: () => void
 }) {
@@ -190,9 +186,8 @@ function ArtifactFrame({
       style={{ borderColor: "var(--cs-rule)", background: "#FFFFFF" }}
       onClick={onClick}
     >
-      <div className="px-5 py-3 border-b flex items-center justify-between text-xs tracking-[0.18em] uppercase" style={{ borderColor: "var(--cs-rule)", color: "var(--cs-ink-muted)" }}>
+      <div className="px-5 py-3 border-b text-xs tracking-[0.18em] uppercase" style={{ borderColor: "var(--cs-rule)", color: "var(--cs-ink-muted)" }}>
         <span>{label}</span>
-        <span className="text-[10px] normal-case tracking-normal">{caption}</span>
       </div>
       <img
         src={src}

@@ -8,7 +8,8 @@ const SCREENS = [
   {
     label: "Board listing",
     caption: "Browse what's available.",
-    img: "/casestudy/features-boardlisting.jpg",
+    video: "/casestudy/features-boardlisting.mp4",
+    img: null,
   },
   {
     label: "Board detail",
