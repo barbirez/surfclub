@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { RevealOnView } from "./RevealOnView";
 import { StageHeader } from "./StageHeader";
 
 const SCENARIOS = [
@@ -28,9 +29,9 @@ export function StageFraming() {
           question="What problem is this actually solving, and for whom?"
         />
 
-        <p className="text-lg leading-relaxed max-w-3xl mb-12" style={{ color: "var(--cs-ink-soft)" }}>
+        <RevealOnView delay={0.12} as="p" className="text-lg leading-relaxed max-w-3xl mb-12" style={{ color: "var(--cs-ink-soft)" }}>
           Before any design, two scenarios had to be specific.
-        </p>
+        </RevealOnView>
 
         {/* Scenario cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">

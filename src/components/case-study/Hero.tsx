@@ -1,5 +1,12 @@
+"use client"
+
+import { useState } from "react"
+import { AnimatePresence } from "motion/react"
+import { Lightbox, type LightboxItem } from "./Lightbox"
 
 export function Hero() {
+  const [lightbox, setLightbox] = useState<LightboxItem | null>(null)
+
   return (
     <section className="relative">
       {/* Top meta bar */}
@@ -77,7 +84,11 @@ P1 Landing → P2 Board menu → P3 Detail
           </div>
 
           {/* Right: live landing screenshot mock */}
-          <div className="rounded-2xl overflow-hidden border relative aspect-[4/5] md:aspect-auto" style={{ borderColor: "var(--cs-rule)", background: "var(--cs-product-bg)" }}>
+          <div
+            className="rounded-2xl overflow-hidden border relative aspect-[4/5] md:aspect-auto cursor-zoom-in"
+            style={{ borderColor: "var(--cs-rule)", background: "var(--cs-product-bg)" }}
+            onClick={() => setLightbox({ type: "video", src: "/casestudy/wavyclub-mockup-intro.mp4", label: "WavyClub intro" })}
+          >
             <div className="relative w-full h-full" style={{ minHeight: "420px" }}>
               <video
                 src="/casestudy/wavyclub-mockup-intro.mp4"
@@ -85,7 +96,7 @@ P1 Landing → P2 Board menu → P3 Detail
                 muted
                 loop
                 playsInline
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none"
               />
             </div>
           </div>
@@ -94,6 +105,10 @@ P1 Landing → P2 Board menu → P3 Detail
           From text document to shipped Next.js / Vercel app — in 48 hours.
         </p>
       </div>
+
+      <AnimatePresence>
+        {lightbox && <Lightbox item={lightbox} onClose={() => setLightbox(null)} />}
+      </AnimatePresence>
     </section>
   );
 }

@@ -1,17 +1,21 @@
+import { RevealOnView } from "./RevealOnView";
+
 export function Manifesto() {
   return (
     <section className="py-32" style={{ background: "var(--cs-bg-alt)" }}>
       <div className="mx-auto max-w-4xl px-6">
-        <p className="text-xs tracking-[0.22em] uppercase mb-8" style={{ color: "var(--cs-ink-muted)" }}>
-          ✦ &nbsp;Why I&apos;m doing this
-        </p>
-        <h2 className="font-serif text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.05] tracking-tight mb-12">
-          We&apos;re in the middle of a transition.
-        </h2>
-        <div className="space-y-8 text-lg leading-relaxed max-w-3xl" style={{ color: "var(--cs-ink-soft)" }}>
-          <p>
-            The way we built digital products five years ago — the way I was trained, the way most teams still operate — is already a legacy process. Design tools, specification flows, handoffs between design and engineering, the relationship between thinking and making: all of it was shaped for a world where a person executed every step by hand. That world is ending.
+        <RevealOnView>
+          <p className="text-xs tracking-[0.22em] uppercase mb-8" style={{ color: "var(--cs-ink-muted)" }}>
+            ✦ &nbsp;Why I&apos;m doing this
           </p>
+          <h2 className="font-serif text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.05] tracking-tight mb-12">
+            We&apos;re in the middle of a transition.
+          </h2>
+        </RevealOnView>
+        <div className="space-y-8 text-lg leading-relaxed max-w-3xl" style={{ color: "var(--cs-ink-soft)" }}>
+          <RevealOnView delay={0.12} as="p">
+            The way we built digital products five years ago — the way I was trained, the way most teams still operate — is already a legacy process. Design tools, specification flows, handoffs between design and engineering, the relationship between thinking and making: all of it was shaped for a world where a person executed every step by hand. That world is ending.
+          </RevealOnView>
           <p>
             Six months ago, Figma was my main tool to create and frame ideas. Now I open a shaping document. A new way is forming in real time, where AI is embedded in the loop from framing to shipping, and where the best work comes from people who know which questions to ask the machine and which decisions to keep for themselves.
           </p>

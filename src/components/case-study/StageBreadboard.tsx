@@ -1,3 +1,5 @@
+import { CountUp } from "./CountUp";
+import { RevealOnView } from "./RevealOnView";
 import { StageHeader } from "./StageHeader";
 
 const PLACES = [
@@ -33,8 +35,9 @@ export function StageBreadboard() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4">
             {PLACES.map((p, i) => (
-              <div
+              <RevealOnView
                 key={p.id}
+                delay={i * 0.04}
                 className="p-6 border-r border-b"
                 style={{
                   borderColor: "var(--cs-rule)",
@@ -51,15 +54,15 @@ export function StageBreadboard() {
                 <div className="text-xs" style={{ color: "var(--cs-ink-muted)" }}>
                   {p.note}
                 </div>
-              </div>
+              </RevealOnView>
             ))}
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-          <Stat label="Places" value="8" />
-          <Stat label="UI affordances" value="22+" />
-          <Stat label="Data stores" value="9" />
+          <Stat label="Places" value={8} />
+          <Stat label="UI affordances" value={22} suffix="+" />
+          <Stat label="Data stores" value={9} />
         </div>
 
         <p className="text-lg leading-relaxed max-w-3xl mt-16" style={{ color: "var(--cs-ink-soft)" }}>
@@ -70,14 +73,14 @@ export function StageBreadboard() {
   );
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Stat({ label, value, suffix }: { label: string; value: number; suffix?: string }) {
   return (
     <div className="p-6 border rounded-2xl" style={{ borderColor: "var(--cs-rule)", background: "var(--cs-bg-alt)" }}>
       <div className="text-xs tracking-[0.22em] uppercase mb-3" style={{ color: "var(--cs-ink-muted)" }}>
         {label}
       </div>
       <div className="font-serif text-4xl" style={{ color: "var(--cs-ink)" }}>
-        {value}
+        <CountUp value={value} suffix={suffix} />
       </div>
     </div>
   );
