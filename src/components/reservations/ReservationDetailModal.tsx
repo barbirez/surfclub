@@ -20,17 +20,10 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
+import { ptBR, enUS } from "date-fns/locale";
 import { toast } from "sonner";
 import Link from "next/link";
-
-const STATUS_LABELS: Record<string, string> = {
-  PENDING: "Pendente",
-  CONFIRMED: "Confirmada",
-  ACTIVE: "Ativa",
-  RETURNED: "Devolvida",
-  CANCELLED: "Cancelada",
-};
+import { useT } from "@/lib/i18n/client";
 
 const STATUS_STYLES: Record<string, string> = {
   PENDING: "bg-yellow-500/15 text-yellow-300 border-yellow-500/30",
@@ -89,6 +82,10 @@ export function ReservationDetailModal({
 }: ReservationDetailModalProps) {
   const [cancelling, setCancelling] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const { t, locale } = useT();
+  const d = t.reservations.detail;
+  const dateLocale = locale === "pt" ? ptBR : enUS;
+  const dateFmt = locale === "pt" ? "dd 'de' MMMM" : "MMMM d";
 
   if (!reservation) return null;
 
@@ -108,13 +105,13 @@ export function ReservationDetailModal({
       });
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || "Erro ao cancelar.");
+        throw new Error(data.error || d.errorCancelling);
       }
-      toast.success("Reserva cancelada com sucesso.");
+      toast.success(d.cancelSuccess);
       onCancelled(reservation.id);
       onClose();
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Erro ao cancelar.");
+      toast.error(err instanceof Error ? err.message : d.errorCancelling);
     } finally {
       setCancelling(false);
       setShowConfirm(false);
@@ -135,13 +132,13 @@ export function ReservationDetailModal({
         {/* ── Header ── */}
         <DialogHeader className="px-5 pt-5 pb-4 pr-12 border-b border-border/60">
           <DialogTitle className="text-base font-semibold">
-            Detalhes da Reserva
+            {d.title}
           </DialogTitle>
           <Badge
             variant="secondary"
             className={`self-start ${STATUS_STYLES[reservation.status]}`}
           >
-            {STATUS_LABELS[reservation.status]}
+            {t.reservations.status[reservation.status as keyof typeof t.reservations.status] ?? reservation.status}
           </Badge>
         </DialogHeader>
 
@@ -201,7 +198,7 @@ export function ReservationDetailModal({
                   onClick={onClose}
                 >
                   <ExternalLink className="h-3 w-3 mr-1" />
-                  Ver prancha
+                  {d.viewBoard}
                 </Link>
               </Button>
             </div>
@@ -210,27 +207,27 @@ export function ReservationDetailModal({
           {/* ── Dates ── */}
           <div className="rounded-xl bg-secondary/60 border border-border/60 p-4 space-y-2">
             <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Período
+              {d.period}
             </p>
             <div className="flex items-center gap-2">
               <CalendarDays className="h-4 w-4 text-primary-light shrink-0" />
               <span className="text-sm font-semibold">
-                {format(startDate, "dd 'de' MMMM", { locale: ptBR })}
+                {format(startDate, dateFmt, { locale: dateLocale })}
               </span>
               <ArrowRight className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
               <span className="text-sm font-semibold">
-                {format(endDate, "dd 'de' MMMM", { locale: ptBR })}
+                {format(endDate, dateFmt, { locale: dateLocale })}
               </span>
             </div>
             <p className="text-xs text-muted-foreground pl-6">
-              {nights} dia{nights !== 1 ? "s" : ""} de aluguel
+              {d.nights(nights)}
             </p>
           </div>
 
           {/* ── Location + Instructions ── */}
           <div className="rounded-xl bg-secondary/60 border border-border/60 p-4 space-y-3">
             <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Local
+              {d.location}
             </p>
             <div className="flex items-start gap-2">
               <MapPin className="h-4 w-4 text-primary-light shrink-0 mt-0.5" />
@@ -250,7 +247,7 @@ export function ReservationDetailModal({
                 {/* Pickup */}
                 <div className="rounded-lg bg-background/60 border border-border p-3 space-y-1">
                   <p className="text-xs font-semibold text-foreground">
-                    Retirada
+                    {d.pickup}
                   </p>
                   <p className="text-xs text-muted-foreground leading-relaxed">
                     {reservation.pickupLocation.pickupInstructions}
@@ -259,7 +256,7 @@ export function ReservationDetailModal({
                 {/* Return */}
                 <div className="rounded-lg bg-background/60 border border-border p-3 space-y-1">
                   <p className="text-xs font-semibold text-foreground">
-                    Devolução
+                    {d.return}
                   </p>
                   <p className="text-xs text-muted-foreground leading-relaxed">
                     {reservation.pickupLocation.returnInstructions}
@@ -273,8 +270,8 @@ export function ReservationDetailModal({
           <p className="text-[11px] text-muted-foreground/60 text-right">
             <span className="font-mono">{reservation.id.slice(0, 10)}…</span>
             {" · "}
-            {format(new Date(reservation.createdAt), "dd/MM/yyyy", {
-              locale: ptBR,
+            {format(new Date(reservation.createdAt), locale === "pt" ? "dd/MM/yyyy" : "MM/dd/yyyy", {
+              locale: dateLocale,
             })}
           </p>
 
@@ -288,7 +285,7 @@ export function ReservationDetailModal({
                   onClick={() => setShowConfirm(true)}
                 >
                   <Trash2 className="h-4 w-4 mr-2" />
-                  Cancelar reserva
+                  {d.cancelCta}
                 </Button>
               ) : (
                 <div className="rounded-xl border border-destructive/30 bg-destructive/5 p-4 space-y-3">
@@ -296,11 +293,10 @@ export function ReservationDetailModal({
                     <AlertTriangle className="h-4 w-4 text-destructive shrink-0 mt-0.5" />
                     <div>
                       <p className="text-sm font-semibold text-destructive">
-                        Confirmar cancelamento
+                        {d.confirmTitle}
                       </p>
                       <p className="text-xs text-muted-foreground mt-0.5">
-                        Essa ação não pode ser desfeita. A prancha voltará a
-                        ficar disponível.
+                        {d.confirmText}
                       </p>
                     </div>
                   </div>
@@ -312,7 +308,7 @@ export function ReservationDetailModal({
                       onClick={() => setShowConfirm(false)}
                       disabled={cancelling}
                     >
-                      Voltar
+                      {d.back}
                     </Button>
                     <Button
                       size="sm"
@@ -320,7 +316,7 @@ export function ReservationDetailModal({
                       onClick={handleCancel}
                       disabled={cancelling}
                     >
-                      {cancelling ? "Cancelando…" : "Sim, cancelar"}
+                      {cancelling ? d.cancelling : d.confirmCta}
                     </Button>
                   </div>
                 </div>

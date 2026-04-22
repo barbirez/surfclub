@@ -28,7 +28,8 @@ export default async function BoardDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const { t } = await getT();
+  const { t, locale } = await getT();
+  const isEn = locale === "en";
 
   // Auth is optional — page is public
   const session = await auth();
@@ -131,29 +132,29 @@ export default async function BoardDetailPage({
             </div>
           </div>
 
-          {(board.description || board.conditionProfile) && (
-            <div className="space-y-2">
-              <h3 className="font-semibold text-sm mb-1.5">{t.boardDetail.description}</h3>
-              {board.description && (
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {board.description}
-                </p>
-              )}
-              {board.conditionProfile && (
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {board.conditionProfile}
-                </p>
-              )}
-            </div>
-          )}
+          {(() => {
+            const description = (isEn && board.descriptionEn) || board.description;
+            const conditionProfile = (isEn && board.conditionProfileEn) || board.conditionProfile;
+            return (description || conditionProfile) && (
+              <div className="space-y-2">
+                <h3 className="font-semibold text-sm mb-1.5">{t.boardDetail.description}</h3>
+                {description && (
+                  <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
+                )}
+                {conditionProfile && (
+                  <p className="text-sm text-muted-foreground leading-relaxed">{conditionProfile}</p>
+                )}
+              </div>
+            );
+          })()}
 
           <ReservationModal
             surfboardId={board.id}
             locationId={board.location.id}
             boardName={board.name}
             boardImage={board.images?.[0]}
-            pickupInstructions={board.location.pickupInstructions}
-            returnInstructions={board.location.returnInstructions}
+            pickupInstructions={(isEn && board.location.pickupInstructionsEn) || board.location.pickupInstructions}
+            returnInstructions={(isEn && board.location.returnInstructionsEn) || board.location.returnInstructions}
             unavailableDates={unavailableDates}
             hasAccess={userHasAccess}
             isLoggedIn={isLoggedIn}
@@ -173,7 +174,7 @@ export default async function BoardDetailPage({
             <div className="rounded-lg bg-secondary border border-border p-3">
               <p className="text-xs font-semibold mb-1">{t.boardDetail.pickupInstructions}</p>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                {board.location.pickupInstructions}
+                {(isEn && board.location.pickupInstructionsEn) || board.location.pickupInstructions}
               </p>
             </div>
           </div>

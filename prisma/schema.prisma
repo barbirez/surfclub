@@ -84,6 +84,8 @@ model Location {
   longitude            Float
   pickupInstructions   String  @db.Text
   returnInstructions   String  @db.Text
+  pickupInstructionsEn String? @db.Text
+  returnInstructionsEn String? @db.Text
 
   surfboards   Surfboard[]
   reservations Reservation[]
@@ -118,6 +120,8 @@ model Surfboard {
   volumeLiters     Float
   description      String?         @db.Text
   conditionProfile String?         @db.Text
+  descriptionEn    String?         @db.Text
+  conditionProfileEn String?       @db.Text
   images           String[]
   status           SurfboardStatus @default(AVAILABLE)
 
