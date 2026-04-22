@@ -43,7 +43,7 @@ export default function LoginPage() {
         <div className="flex flex-col items-center gap-3">
           <Image
             src="/logo-wavyclub.svg"
-            alt="Surf Pack"
+            alt="WavyClub"
             width={160}
             height={46}
             className="w-[160px] h-auto"

@@ -141,7 +141,54 @@ const pt = {
   testimonials: {
     label: "Depoimentos",
     heading: "Quem surfa, aprova",
-    subheading: "Surfistas de todo o Brasil já usam o Surf Pack para aproveitar cada onda.",
+    subheading: "Surfistas de todo o Brasil já usam o WavyClub para aproveitar cada onda.",
+    items: [
+      {
+        text: "Fui passar uma semana em Maresias sem minha prancha e o WavyClub salvou minha viagem. Reservei uma longboard em 2 minutos e surfei todos os dias.",
+        name: "Lucas Ferreira",
+        role: "Surfista amador · São Paulo",
+      },
+      {
+        text: "Perfeito pra quem viaja bastante. Nunca mais me preocupo com despacho de prancha no aeroporto. Chego no destino, reservo e pronto.",
+        name: "Camila Rocha",
+        role: "Surfista · Rio de Janeiro",
+      },
+      {
+        text: "Testei uma fish 5'8 antes de comprar a minha. O WavyClub me poupou muito dinheiro — acabei escolhendo outro shape que funcionou melhor.",
+        name: "Rafael Oliveira",
+        role: "Intermediário · Florianópolis",
+      },
+      {
+        text: "A plataforma é muito intuitiva. Filtrei por volume, escolhi uma prancha do Channel Islands e busquei no ponto em 10 minutos. Experiência incrível.",
+        name: "Beatriz Santos",
+        role: "Surfista · Ubatuba",
+      },
+      {
+        text: "Minha prancha quebrou um dia antes de uma viagem. Abri o app, reservei uma substituta e não perdi uma onda. Serviço essencial para quem surfa.",
+        name: "Pedro Alves",
+        role: "Surfista avançado · Santos",
+      },
+      {
+        text: "As instruções de retirada chegaram por e-mail na hora. Sem stress, sem ligação, só surf. Melhor assinatura que já fiz.",
+        name: "Ana Lima",
+        role: "Surfista · Itacaré",
+      },
+      {
+        text: "Uso o WavyClub toda vez que vou pra Floripa visitar família. Economizo no despacho e ainda testo pranchas novas. Recomendo demais.",
+        name: "Thiago Mendes",
+        role: "Surfista · Curitiba",
+      },
+      {
+        text: "Tava querendo começar a surfar e pude testar diferentes volumes sem precisar comprar. Foi fundamental pra eu evoluir mais rápido.",
+        name: "Fernanda Costa",
+        role: "Iniciante · Campinas",
+      },
+      {
+        text: "O calendário de disponibilidade em tempo real é genial. Nada de mandar mensagem esperando resposta. Reservei e surfei no mesmo dia.",
+        name: "Diego Carvalho",
+        role: "Surfista · Recife",
+      },
+    ],
   },
   cta: {
     label: "Próxima sessão",
@@ -419,7 +466,54 @@ const en: typeof pt = {
   testimonials: {
     label: "Testimonials",
     heading: "Surfers approve",
-    subheading: "Surfers from all over Brazil use Surf Pack to make the most of every wave.",
+    subheading: "Surfers from all over Brazil use WavyClub to make the most of every wave.",
+    items: [
+      {
+        text: "I spent a week in Maresias without my board and WavyClub saved my trip. I booked a longboard in 2 minutes and surfed every single day.",
+        name: "Lucas Ferreira",
+        role: "Amateur surfer · São Paulo",
+      },
+      {
+        text: "Perfect for anyone who travels a lot. I don't worry about board freight at the airport anymore — I land, reserve, and I'm good to go.",
+        name: "Camila Rocha",
+        role: "Surfer · Rio de Janeiro",
+      },
+      {
+        text: "I tested a 5'8 fish before buying my own. WavyClub saved me a ton of money — I ended up picking a different shape that worked way better for me.",
+        name: "Rafael Oliveira",
+        role: "Intermediate · Florianópolis",
+      },
+      {
+        text: "The platform is super intuitive. I filtered by volume, picked a Channel Islands board, and grabbed it at the spot in 10 minutes. Incredible experience.",
+        name: "Beatriz Santos",
+        role: "Surfer · Ubatuba",
+      },
+      {
+        text: "My board snapped the day before a trip. I opened the app, reserved a replacement, and didn't miss a single wave. Essential service for anyone who surfs.",
+        name: "Pedro Alves",
+        role: "Advanced surfer · Santos",
+      },
+      {
+        text: "Pickup instructions landed in my inbox right on time. No stress, no phone calls — just surfing. Best subscription I've ever signed up for.",
+        name: "Ana Lima",
+        role: "Surfer · Itacaré",
+      },
+      {
+        text: "I use WavyClub every time I visit family in Floripa. I save on freight and get to try new boards. Highly recommend.",
+        name: "Thiago Mendes",
+        role: "Surfer · Curitiba",
+      },
+      {
+        text: "I was just getting into surfing and got to try different volumes without having to buy anything. It was huge for how quickly I progressed.",
+        name: "Fernanda Costa",
+        role: "Beginner · Campinas",
+      },
+      {
+        text: "The real-time availability calendar is genius. No more DMs waiting for a reply — I reserved and surfed the same day.",
+        name: "Diego Carvalho",
+        role: "Surfer · Recife",
+      },
+    ],
   },
   cta: {
     label: "Next session",

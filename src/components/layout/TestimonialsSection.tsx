@@ -1,71 +1,34 @@
 "use client";
+import { useMemo } from "react";
 import { motion } from "motion/react";
 import { TestimonialsColumn } from "@/components/ui/testimonials-columns-1";
 import { useT } from "@/lib/i18n/client";
 
-const testimonials = [
-  {
-    text: "Fui passar uma semana em Maresias sem minha prancha e o Surf Pack salvou minha viagem. Reservei uma longboard em 2 minutos e surfei todos os dias.",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
-    name: "Lucas Ferreira",
-    role: "Surfista amador · São Paulo",
-  },
-  {
-    text: "Perfeito pra quem viaja bastante. Nunca mais me preocupo com despacho de prancha no aeroporto. Chego no destino, reservo e pronto.",
-    image: "https://randomuser.me/api/portraits/women/44.jpg",
-    name: "Camila Rocha",
-    role: "Surfista · Rio de Janeiro",
-  },
-  {
-    text: "Testei uma fish 5'8 antes de comprar a minha. O Surf Pack me poupou muito dinheiro — acabei escolhendo outro shape que funcionou melhor.",
-    image: "https://randomuser.me/api/portraits/men/11.jpg",
-    name: "Rafael Oliveira",
-    role: "Intermediário · Florianópolis",
-  },
-  {
-    text: "A plataforma é muito intuitiva. Filtrei por volume, escolhi uma prancha do Channel Islands e busquei no ponto em 10 minutos. Experiência incrível.",
-    image: "https://randomuser.me/api/portraits/women/68.jpg",
-    name: "Beatriz Santos",
-    role: "Surfista · Ubatuba",
-  },
-  {
-    text: "Minha prancha quebrou um dia antes de uma viagem. Abri o app, reservei uma substituta e não perdi uma onda. Serviço essencial para quem surfa.",
-    image: "https://randomuser.me/api/portraits/men/54.jpg",
-    name: "Pedro Alves",
-    role: "Surfista avançado · Santos",
-  },
-  {
-    text: "As instruções de retirada chegaram por e-mail na hora. Sem stress, sem ligação, só surf. Melhor assinatura que já fiz.",
-    image: "https://randomuser.me/api/portraits/women/22.jpg",
-    name: "Ana Lima",
-    role: "Surfista · Itacaré",
-  },
-  {
-    text: "Uso o Surf Pack toda vez que vou pra Floripa visitar família. Economizo no despacho e ainda testo pranchas novas. Recomendo demais.",
-    image: "https://randomuser.me/api/portraits/men/76.jpg",
-    name: "Thiago Mendes",
-    role: "Surfista · Curitiba",
-  },
-  {
-    text: "Tava querendo começar a surfar e pude testar diferentes volumes sem precisar comprar. Foi fundamental pra eu evoluir mais rápido.",
-    image: "https://randomuser.me/api/portraits/women/55.jpg",
-    name: "Fernanda Costa",
-    role: "Iniciante · Campinas",
-  },
-  {
-    text: "O calendário de disponibilidade em tempo real é genial. Nada de mandar mensagem esperando resposta. Reservei e surfei no mesmo dia.",
-    image: "https://randomuser.me/api/portraits/men/38.jpg",
-    name: "Diego Carvalho",
-    role: "Surfista · Recife",
-  },
+const TESTIMONIAL_IMAGES = [
+  "https://randomuser.me/api/portraits/men/32.jpg",
+  "https://randomuser.me/api/portraits/women/44.jpg",
+  "https://randomuser.me/api/portraits/men/11.jpg",
+  "https://randomuser.me/api/portraits/women/68.jpg",
+  "https://randomuser.me/api/portraits/men/54.jpg",
+  "https://randomuser.me/api/portraits/women/22.jpg",
+  "https://randomuser.me/api/portraits/men/76.jpg",
+  "https://randomuser.me/api/portraits/women/55.jpg",
+  "https://randomuser.me/api/portraits/men/38.jpg",
 ];
-
-const firstColumn = testimonials.slice(0, 3);
-const secondColumn = testimonials.slice(3, 6);
-const thirdColumn = testimonials.slice(6, 9);
 
 export function TestimonialsSection() {
   const { t } = useT();
+  const testimonials = useMemo(
+    () =>
+      t.testimonials.items.map((item, i) => ({
+        ...item,
+        image: TESTIMONIAL_IMAGES[i] ?? TESTIMONIAL_IMAGES[0],
+      })),
+    [t.testimonials.items],
+  );
+  const firstColumn = testimonials.slice(0, 3);
+  const secondColumn = testimonials.slice(3, 6);
+  const thirdColumn = testimonials.slice(6, 9);
   return (
     <section className="bg-background py-20 relative overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
