@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import { BoardCard } from "./BoardCard";
+import { useT } from "@/lib/i18n/client";
 
 interface Board {
   id: string;
@@ -19,6 +20,8 @@ interface Board {
 export function BoardCarousel({ boards }: { boards: Board[] }) {
   const [paused, setPaused] = useState(false);
   const items = [...boards, ...boards];
+  const { t } = useT();
+  const c = t.boardsCarousel;
 
   if (boards.length === 0) return null;
 
@@ -46,10 +49,10 @@ export function BoardCarousel({ boards }: { boards: Board[] }) {
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       >
         <p className="text-sm font-bold uppercase tracking-widest text-primary-light">
-          Quiver disponível
+          {c.eyebrow}
         </p>
         <h2 className="text-4xl font-extrabold sm:text-5xl">
-          1000+ pranchas
+          {c.title}
         </h2>
       </motion.div>
 

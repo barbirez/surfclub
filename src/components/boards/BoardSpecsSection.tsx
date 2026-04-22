@@ -1,4 +1,7 @@
+"use client";
+
 import type { SurfboardType } from "@prisma/client";
+import { useT } from "@/lib/i18n/client";
 
 const BOARD_TYPE_LABELS: Record<string, string> = {
   SHORTBOARD: "Shortboard",
@@ -17,6 +20,7 @@ interface BoardSpecsProps {
     size: string;
     volumeLiters: number;
     conditionProfile?: string | null;
+    conditionProfileEn?: string | null;
   };
 }
 
@@ -36,17 +40,22 @@ function SpecRow({ label, value }: SpecRowProps) {
 }
 
 export function BoardSpecsSection({ board }: BoardSpecsProps) {
+  const { t, locale } = useT();
+  const d = t.boardDetail;
+  const conditionProfile =
+    (locale === "en" && board.conditionProfileEn) || board.conditionProfile;
+
   return (
     <section className="rounded-2xl border border-border bg-card p-6">
       <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">
-        Especificações
+        {d.specs}
       </h3>
       <div>
-        <SpecRow label="Indicada para" value={board.conditionProfile} />
-        <SpecRow label="Tipo" value={BOARD_TYPE_LABELS[board.type] || board.type} />
-        <SpecRow label="Shaper" value={board.shaper} />
-        <SpecRow label="Volume" value={`${board.volumeLiters}L`} />
-        <SpecRow label="Tamanho" value={board.size} />
+        <SpecRow label={d.idealFor} value={conditionProfile} />
+        <SpecRow label={d.type} value={BOARD_TYPE_LABELS[board.type] || board.type} />
+        <SpecRow label={d.shaper} value={board.shaper} />
+        <SpecRow label={d.volume} value={`${board.volumeLiters}L`} />
+        <SpecRow label={d.size} value={board.size} />
       </div>
     </section>
   );

@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { SlidersHorizontal, Search, X } from "lucide-react";
+import { useT } from "@/lib/i18n/client";
 
 const BOARD_TYPES = [
   { value: "SHORTBOARD", label: "Shortboard" },
@@ -116,12 +117,15 @@ export function BoardFilters({ shapers, cities, spots }: BoardFiltersProps) {
   const FILTER_KEYS = ["type", "minVolume", "maxVolume", "minSize", "maxSize", "shaper", "city", "spot", "q"];
   const hasFilters = FILTER_KEYS.some((k) => searchParams.get(k));
 
+  const { t } = useT();
+  const f = t.boardFilters;
+
   return (
     <aside className="w-72 shrink-0 sticky top-[5rem] self-start max-h-[calc(100vh-6rem)] overflow-y-auto space-y-6 rounded-xl border border-border bg-card p-5">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <SlidersHorizontal className="h-4 w-4 text-muted-foreground" />
-          <span className="font-semibold text-sm">Filtros</span>
+          <span className="font-semibold text-sm">{f.title}</span>
         </div>
         {hasFilters && (
           <Button
@@ -131,18 +135,18 @@ export function BoardFilters({ shapers, cities, spots }: BoardFiltersProps) {
             className="h-7 gap-1 text-xs text-muted-foreground hover:text-foreground px-2"
           >
             <X className="h-3.5 w-3.5" />
-            Limpar
+            {f.clear}
           </Button>
         )}
       </div>
 
       {/* Search */}
       <div className="space-y-1.5">
-        <Label className="text-xs text-muted-foreground uppercase tracking-wide">Buscar</Label>
+        <Label className="text-xs text-muted-foreground uppercase tracking-wide">{f.search}</Label>
         <div className="relative">
           <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Nome, tipo ou cidade..."
+            placeholder={f.searchPlaceholder}
             className="h-9 pl-8"
             value={q}
             onChange={(e) => setQ(e.target.value)}
@@ -153,16 +157,16 @@ export function BoardFilters({ shapers, cities, spots }: BoardFiltersProps) {
       {/* City */}
       {cities.length > 0 && (
         <div className="space-y-1.5">
-          <Label className="text-xs text-muted-foreground uppercase tracking-wide">Cidade</Label>
+          <Label className="text-xs text-muted-foreground uppercase tracking-wide">{f.city}</Label>
           <Select
             value={searchParams.get("city") || "all"}
             onValueChange={(v) => updateSelect("city", v)}
           >
             <SelectTrigger className="h-9 w-full">
-              <SelectValue placeholder="Todas as cidades" />
+              <SelectValue placeholder={f.cityAll} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Todas as cidades</SelectItem>
+              <SelectItem value="all">{f.cityAll}</SelectItem>
               {cities.map((c) => (
                 <SelectItem key={c} value={c}>
                   {c}
@@ -176,16 +180,16 @@ export function BoardFilters({ shapers, cities, spots }: BoardFiltersProps) {
       {/* Spot / Ponto */}
       {filteredSpots.length > 0 && (
         <div className="space-y-1.5">
-          <Label className="text-xs text-muted-foreground uppercase tracking-wide">Ponto</Label>
+          <Label className="text-xs text-muted-foreground uppercase tracking-wide">{f.spot}</Label>
           <Select
             value={searchParams.get("spot") || "all"}
             onValueChange={(v) => updateSelect("spot", v)}
           >
             <SelectTrigger className="h-9 w-full">
-              <SelectValue placeholder="Todos os pontos" />
+              <SelectValue placeholder={f.spotAll} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Todos os pontos</SelectItem>
+              <SelectItem value="all">{f.spotAll}</SelectItem>
               {filteredSpots.map((s) => (
                 <SelectItem key={s.id} value={s.id}>
                   {s.label}
@@ -198,16 +202,16 @@ export function BoardFilters({ shapers, cities, spots }: BoardFiltersProps) {
 
       {/* Board type */}
       <div className="space-y-1.5">
-        <Label className="text-xs text-muted-foreground uppercase tracking-wide">Tipo de prancha</Label>
+        <Label className="text-xs text-muted-foreground uppercase tracking-wide">{f.type}</Label>
         <Select
           value={searchParams.get("type") || "all"}
           onValueChange={(v) => updateSelect("type", v)}
         >
           <SelectTrigger className="h-9 w-full">
-            <SelectValue placeholder="Todos os tipos" />
+            <SelectValue placeholder={f.typeAll} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Todos os tipos</SelectItem>
+            <SelectItem value="all">{f.typeAll}</SelectItem>
             {BOARD_TYPES.map((t) => (
               <SelectItem key={t.value} value={t.value}>
                 {t.label}
@@ -219,11 +223,11 @@ export function BoardFilters({ shapers, cities, spots }: BoardFiltersProps) {
 
       {/* Size range */}
       <div className="space-y-1.5">
-        <Label className="text-xs text-muted-foreground uppercase tracking-wide">Tamanho (pés)</Label>
+        <Label className="text-xs text-muted-foreground uppercase tracking-wide">{f.sizeRange}</Label>
         <div className="flex items-center gap-2">
           <Input
             type="number"
-            placeholder="Mín"
+            placeholder={f.min}
             className="h-9"
             step="0.1"
             min="4"
@@ -234,7 +238,7 @@ export function BoardFilters({ shapers, cities, spots }: BoardFiltersProps) {
           <span className="text-muted-foreground text-sm shrink-0">–</span>
           <Input
             type="number"
-            placeholder="Máx"
+            placeholder={f.max}
             className="h-9"
             step="0.1"
             min="4"
@@ -247,11 +251,11 @@ export function BoardFilters({ shapers, cities, spots }: BoardFiltersProps) {
 
       {/* Volume range */}
       <div className="space-y-1.5">
-        <Label className="text-xs text-muted-foreground uppercase tracking-wide">Volume (litros)</Label>
+        <Label className="text-xs text-muted-foreground uppercase tracking-wide">{f.volumeRange}</Label>
         <div className="flex items-center gap-2">
           <Input
             type="number"
-            placeholder="Mín"
+            placeholder={f.min}
             className="h-9"
             value={minVolume}
             onChange={(e) => setMinVolume(e.target.value)}
@@ -259,7 +263,7 @@ export function BoardFilters({ shapers, cities, spots }: BoardFiltersProps) {
           <span className="text-muted-foreground text-sm shrink-0">–</span>
           <Input
             type="number"
-            placeholder="Máx"
+            placeholder={f.max}
             className="h-9"
             value={maxVolume}
             onChange={(e) => setMaxVolume(e.target.value)}
@@ -270,16 +274,16 @@ export function BoardFilters({ shapers, cities, spots }: BoardFiltersProps) {
       {/* Brand / Shaper */}
       {shapers.length > 0 && (
         <div className="space-y-1.5">
-          <Label className="text-xs text-muted-foreground uppercase tracking-wide">Marca / Shaper</Label>
+          <Label className="text-xs text-muted-foreground uppercase tracking-wide">{f.shaper}</Label>
           <Select
             value={searchParams.get("shaper") || "all"}
             onValueChange={(v) => updateSelect("shaper", v)}
           >
             <SelectTrigger className="h-9 w-full">
-              <SelectValue placeholder="Todos os shapers" />
+              <SelectValue placeholder={f.shaperAll} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Todos os shapers</SelectItem>
+              <SelectItem value="all">{f.shaperAll}</SelectItem>
               {shapers.map((s) => (
                 <SelectItem key={s} value={s}>
                   {s}
