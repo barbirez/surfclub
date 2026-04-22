@@ -10,6 +10,7 @@ interface ImageComparisonSliderProps extends React.HTMLAttributes<HTMLDivElement
   altLeft?: string
   altRight?: string
   initialPosition?: number
+  autoPeek?: boolean
 }
 
 export const ImageComparisonSlider = React.forwardRef<HTMLDivElement, ImageComparisonSliderProps>(
@@ -21,6 +22,7 @@ export const ImageComparisonSlider = React.forwardRef<HTMLDivElement, ImageCompa
       altLeft = "Left image",
       altRight = "Right image",
       initialPosition = 50,
+      autoPeek = false,
       ...props
     },
     ref
@@ -28,6 +30,49 @@ export const ImageComparisonSlider = React.forwardRef<HTMLDivElement, ImageCompa
     const [sliderPosition, setSliderPosition] = React.useState(initialPosition)
     const [isDragging, setIsDragging] = React.useState(false)
     const containerRef = React.useRef<HTMLDivElement>(null)
+    const hasPeeked = React.useRef(false)
+
+    React.useEffect(() => {
+      if (!autoPeek || hasPeeked.current) return
+      const el = containerRef.current
+      if (!el) return
+      const reduce = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+      if (reduce) return
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (!entries[0].isIntersecting || hasPeeked.current || isDragging) return
+          hasPeeked.current = true
+          io.disconnect()
+          const duration = 1600
+          const keyframes = [initialPosition, 60, 40, initialPosition]
+          const times = [0, 400, 1000, duration]
+          const start = performance.now()
+          let rafId = 0
+          const tick = (now: number) => {
+            const elapsed = now - start
+            if (elapsed >= duration) {
+              setSliderPosition(initialPosition)
+              return
+            }
+            let i = 0
+            while (i < times.length - 1 && elapsed > times[i + 1]) i++
+            const segStart = times[i]
+            const segEnd = times[i + 1]
+            const t = (elapsed - segStart) / (segEnd - segStart)
+            const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2
+            const val = keyframes[i] + (keyframes[i + 1] - keyframes[i]) * eased
+            setSliderPosition(val)
+            rafId = requestAnimationFrame(tick)
+          }
+          rafId = requestAnimationFrame(tick)
+          return () => cancelAnimationFrame(rafId)
+        },
+        { threshold: 0.5 }
+      )
+      io.observe(el)
+      return () => io.disconnect()
+    }, [autoPeek, initialPosition, isDragging])
 
     const handleMove = (clientX: number) => {
       if (!containerRef.current) return

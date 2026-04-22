@@ -1,3 +1,4 @@
+import { RevealOnView } from "./RevealOnView";
 import { StageHeader } from "./StageHeader";
 
 export function StageShipping() {
@@ -10,9 +11,9 @@ export function StageShipping() {
           question="What's the smallest version that tells the truth about the idea?"
         />
 
-        <p className="text-lg leading-relaxed max-w-3xl mb-16" style={{ color: "var(--cs-ink-soft)" }}>
+        <RevealOnView delay={0.12} as="p" className="text-lg leading-relaxed max-w-3xl mb-16" style={{ color: "var(--cs-ink-soft)" }}>
           Two days forces choices. Here&apos;s what I chose to finish, and what I left rough:
-        </p>
+        </RevealOnView>
 
         <div className="border-y divide-y" style={{ borderColor: "var(--cs-rule)" }}>
           <div className="grid grid-cols-12 gap-6 py-12" style={{ borderColor: "var(--cs-rule)" }}>

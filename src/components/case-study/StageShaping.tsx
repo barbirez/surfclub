@@ -1,3 +1,4 @@
+import { RevealOnView } from "./RevealOnView";
 import { StageHeader } from "./StageHeader";
 
 export function StageShaping() {
@@ -12,9 +13,9 @@ export function StageShaping() {
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
           <div className="md:col-span-7 space-y-8 text-lg leading-relaxed" style={{ color: "var(--cs-ink-soft)" }}>
-            <p className="font-serif text-2xl md:text-3xl leading-snug" style={{ color: "var(--cs-ink)" }}>
+            <RevealOnView delay={0.12} as="p" className="font-serif text-2xl md:text-3xl leading-snug" style={{ color: "var(--cs-ink)" }}>
               One day to build, one day as buffer. Decided <em>before</em> I scoped a single feature.
-            </p>
+            </RevealOnView>
             <p>
               This is the hardest discipline to keep when working with AI, because adding is cheap. The temptation to keep extending scope is constant — another feature is always one prompt away. Setting time before features is the constraint that makes AI-assisted building honest. Without it, the tool accelerates drift.
             </p>

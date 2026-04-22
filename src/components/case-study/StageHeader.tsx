@@ -1,3 +1,5 @@
+import { RevealOnView } from "./RevealOnView";
+
 export function StageHeader({
   num,
   name,
@@ -8,7 +10,7 @@ export function StageHeader({
   question: string;
 }) {
   return (
-    <div className="mb-16 max-w-3xl">
+    <RevealOnView className="mb-16 max-w-3xl">
       <p className="text-xs tracking-[0.22em] uppercase mb-4" style={{ color: "var(--cs-ink-muted)" }}>
         ✦ &nbsp;Stage {num}
       </p>
@@ -18,6 +20,6 @@ export function StageHeader({
       <p className="font-serif italic text-2xl md:text-3xl leading-snug" style={{ color: "var(--cs-ink-soft)" }}>
         {question}
       </p>
-    </div>
+    </RevealOnView>
   );
 }
